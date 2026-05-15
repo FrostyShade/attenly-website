@@ -6,151 +6,134 @@
   <title>Attenly</title>
 
   <style>
-    body {
+    * {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f0f14;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Inter", Arial, sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #1a1a2e, #0f0f14);
       color: white;
-      text-align: center;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
     }
 
     .container {
-      max-width: 800px;
-      margin: auto;
-      padding: 40px 20px;
+      max-width: 900px;
+      text-align: center;
+    }
+
+    .logo {
+      width: 90px;
+      height: 90px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
 
     h1 {
-      font-size: 48px;
-      color: #b794f4;
+      font-size: 52px;
+      background: linear-gradient(90deg, #a78bfa, #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
     }
 
-    p {
-      opacity: 0.8;
-      line-height: 1.6;
+    .subtitle {
+      font-size: 18px;
+      opacity: 0.75;
+      margin-bottom: 30px;
+      line-height: 1.5;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .feature {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 15px;
+      border-radius: 12px;
     }
 
     .btn {
       display: inline-block;
-      margin-top: 20px;
-      padding: 12px 18px;
-      background: #6d28d9;
+      margin-top: 25px;
+      padding: 12px 22px;
+      background: linear-gradient(90deg, #7c3aed, #3b82f6);
       color: white;
-      border-radius: 8px;
       text-decoration: none;
+      border-radius: 10px;
       font-weight: bold;
+      transition: 0.3s;
     }
 
     .btn:hover {
-      background: #7c3aed;
-    }
-
-    .features {
-      margin-top: 40px;
-      display: grid;
-      gap: 10px;
-    }
-
-    .card {
-      background: #1a1a24;
-      padding: 15px;
-      border-radius: 10px;
+      transform: scale(1.05);
     }
 
     footer {
-      margin-top: 60px;
-      padding: 20px;
-      font-size: 14px;
-      opacity: 0.7;
-    }
-
-    footer a {
-      color: #b794f4;
-      text-decoration: none;
-      margin: 0 10px;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-    }
-
-    .legal {
-      margin-top: 60px;
-      text-align: left;
-      font-size: 14px;
-      opacity: 0.85;
-      background: #1a1a24;
-      padding: 20px;
-      border-radius: 10px;
-    }
-
-    h2 {
-      color: #b794f4;
+      margin-top: 50px;
+      font-size: 13px;
+      opacity: 0.6;
     }
   </style>
 </head>
 
 <body>
 
-<div class="container">
+  <div class="container">
 
-  <h1>Attenly</h1>
-  <p>
-    A student productivity app for attendance tracking, schedules, and assignments.
-    Stay organized. Stay ahead.
-  </p>
+    <!-- LOGO -->
+    <img src="logo.png" class="logo" alt="logo"/>
 
-  <a class="btn" href="#">Download App</a>
+    <!-- TITLE -->
+    <h1>Attenly</h1>
 
-  <div class="features">
-    <div class="card">📊 Smart Attendance Tracking</div>
-    <div class="card">📅 Timetable Management</div>
-    <div class="card">📝 Assignment Tracking</div>
-    <div class="card">⚡ Safe-to-skip predictions</div>
+    <p class="subtitle">
+      A smart student productivity app for attendance tracking, timetables, and assignments.<br/>
+      Simple. Fast. Reliable.
+    </p>
+
+    <!-- BUTTON -->
+    <a href="#" class="btn">Download App</a>
+
+    <!-- FEATURES -->
+    <div class="features">
+      <div class="feature">📊 Attendance Tracking</div>
+      <div class="feature">📅 Smart Timetable</div>
+      <div class="feature">📝 Assignments</div>
+      <div class="feature">⚡ Safe-to-skip Logic</div>
+    </div>
+
+    <!-- INFO CARD -->
+    <div class="card">
+      Built for students who want clarity, structure, and control over their academic routine.
+    </div>
+
+    <footer>
+      © 2026 Attenly • All rights reserved
+    </footer>
+
   </div>
-
-  <!-- PRIVACY POLICY -->
-  <div class="legal" id="privacy">
-    <h2>Privacy Policy</h2>
-    <p>
-      Attenly does not collect, store, or share any personal data on external servers.
-      All data is stored locally on the user's device unless explicitly exported by the user.
-    </p>
-    <p>
-      The app may store user preferences and academic data locally to provide core functionality.
-      No data is sold or shared with third parties.
-    </p>
-  </div>
-
-  <!-- TERMS -->
-  <div class="legal" id="terms">
-    <h2>Terms of Use</h2>
-    <p>
-      By using Attenly, you agree that the app is provided "as is" without warranties.
-      The attendance predictions and calculations are for guidance only and may not be 100% accurate.
-    </p>
-    <p>
-      Users are responsible for how they use the information generated by the app.
-    </p>
-  </div>
-
-  <!-- CONTACT -->
-  <div class="legal" id="contact">
-    <h2>Contact</h2>
-    <p>
-      For support or feedback:<br/>
-      Email: attenly.support@example.com
-    </p>
-  </div>
-
-  <footer>
-    <p>© 2026 Attenly. All rights reserved.</p>
-    <a href="#privacy">Privacy</a>
-    <a href="#terms">Terms</a>
-    <a href="#contact">Contact</a>
-  </footer>
-
-</div>
 
 </body>
 </html>
