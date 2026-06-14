@@ -3,252 +3,902 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Attenly</title>
+  <title>Attenly — Smart Attendance & Timetable Tracker for Students</title>
+  <meta name="description" content="Attenly is the smartest attendance tracker for college students. Track attendance, plan your timetable, manage assignments, and know exactly when it's safe to skip — all in one app."/>
+  <meta name="keywords" content="attendance tracker, college app, timetable, assignment tracker, safe to skip, student app"/>
+  <meta property="og:title" content="Attenly — Smart Attendance Tracker for Students"/>
+  <meta property="og:description" content="Track attendance, manage timetables & assignments. Know exactly when it's safe to skip."/>
+  <meta property="og:image" content="logo.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 
   <style>
-    * {
+    /* ─────────────────────────────────────────
+       DESIGN TOKENS
+    ───────────────────────────────────────── */
+    :root {
+      --purple-1: #7c3aed;
+      --purple-2: #9b5cf5;
+      --blue-1: #3b82f6;
+      --blue-2: #60a5fa;
+      --indigo: #6366f1;
+      --bg-deep: #08080f;
+      --bg-mid: #0d0d1a;
+      --glass: rgba(255,255,255,0.05);
+      --glass-border: rgba(255,255,255,0.08);
+      --glass-hover: rgba(255,255,255,0.09);
+      --text-primary: #f0f0ff;
+      --text-muted: rgba(255,255,255,0.55);
+      --text-subtle: rgba(255,255,255,0.35);
+      --glow-purple: rgba(124,58,237,0.35);
+      --glow-blue: rgba(59,130,246,0.25);
+      --radius-card: 20px;
+      --radius-btn: 12px;
+    }
+
+    /* ─────────────────────────────────────────
+       BASE RESET
+    ───────────────────────────────────────── */
+    *, *::before, *::after {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: "Inter", Arial, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      background: radial-gradient(circle at top, #1a1a2e, #0f0f14);
-      color: white;
+      font-family: "Inter", Arial, sans-serif;
+      background-color: var(--bg-deep);
+      color: var(--text-primary);
       min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ─────────────────────────────────────────
+       BACKGROUND — AURORA MESH
+    ───────────────────────────────────────── */
+    .bg-aurora {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .bg-aurora::before {
+      content: "";
+      position: absolute;
+      top: -20%;
+      left: -15%;
+      width: 70vw;
+      height: 70vw;
+      background: radial-gradient(ellipse at center, rgba(124,58,237,0.22) 0%, transparent 65%);
+      animation: auroraFloat 12s ease-in-out infinite alternate;
+      border-radius: 50%;
+    }
+
+    .bg-aurora::after {
+      content: "";
+      position: absolute;
+      bottom: -20%;
+      right: -15%;
+      width: 60vw;
+      height: 60vw;
+      background: radial-gradient(ellipse at center, rgba(59,130,246,0.18) 0%, transparent 65%);
+      animation: auroraFloat 15s ease-in-out infinite alternate-reverse;
+      border-radius: 50%;
+    }
+
+    .bg-dot-grid {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 36px 36px;
+    }
+
+    @keyframes auroraFloat {
+      0%   { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(6%, 8%) scale(1.12); }
+    }
+
+    /* ─────────────────────────────────────────
+       LAYOUT
+    ───────────────────────────────────────── */
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 940px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    /* ─────────────────────────────────────────
+       NAV
+    ───────────────────────────────────────── */
+    nav {
       display: flex;
-      justify-content: center;
-      padding: 20px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 0;
     }
 
-    .container {
-      max-width: 900px;
-      width: 100%;
-      text-align: center;
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text-primary);
     }
 
-    /* HERO */
-    .hero {
-      margin-top: 20px;
-      margin-bottom: 40px;
+    .nav-logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px var(--glow-purple);
     }
 
-    .logo {
-      width: 90px;
-      height: 90px;
-      border-radius: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-
-    h1 {
-      font-size: 52px;
+    .nav-name {
+      font-size: 18px;
+      font-weight: 700;
       background: linear-gradient(90deg, #a78bfa, #60a5fa);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin-bottom: 10px;
     }
 
-    .subtitle {
-      font-size: 18px;
-      opacity: 0.75;
-      margin-bottom: 25px;
-      line-height: 1.5;
+    .nav-cta {
+      padding: 9px 18px;
+      background: linear-gradient(90deg, var(--purple-1), var(--blue-1));
+      border-radius: var(--radius-btn);
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      color: #fff;
+      transition: opacity .2s, transform .2s, box-shadow .2s;
+      box-shadow: 0 4px 20px var(--glow-purple);
     }
 
-    /* CTA */
-    .cta {
+    .nav-cta:hover {
+      opacity: .88;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 28px var(--glow-purple);
+    }
+
+    /* ─────────────────────────────────────────
+       HERO
+    ───────────────────────────────────────── */
+    .hero {
+      text-align: center;
+      padding: 68px 0 56px;
+    }
+
+    .hero-logo-wrap {
+      display: inline-block;
+      position: relative;
+      margin-bottom: 28px;
+      animation: heroLogoIn .7s cubic-bezier(.34,1.56,.64,1) both;
+    }
+
+    .hero-logo-wrap::before {
+      content: "";
+      position: absolute;
+      inset: -12px;
+      border-radius: 28px;
+      background: linear-gradient(135deg, rgba(124,58,237,.45), rgba(59,130,246,.3));
+      filter: blur(18px);
+      z-index: -1;
+      animation: logoPulse 3s ease-in-out infinite;
+    }
+
+    .hero-logo {
+      width: 96px;
+      height: 96px;
+      border-radius: 24px;
+      box-shadow: 0 16px 48px rgba(0,0,0,.6);
+      display: block;
+    }
+
+    @keyframes heroLogoIn {
+      from { opacity: 0; transform: scale(.75) translateY(20px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    @keyframes logoPulse {
+      0%, 100% { opacity: .7; }
+      50%       { opacity: 1; }
+    }
+
+    /* Badge strip */
+    .badge-strip {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(124,58,237,.12);
+      border: 1px solid rgba(124,58,237,.3);
+      border-radius: 999px;
+      padding: 6px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #c4b5fd;
+      margin-bottom: 20px;
+      animation: fadeSlideUp .6s .1s ease both;
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #a78bfa;
+      box-shadow: 0 0 8px #a78bfa;
+      animation: dotPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes dotPulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: .4; }
+    }
+
+    h1 {
+      font-size: clamp(38px, 6vw, 64px);
+      font-weight: 900;
+      letter-spacing: -2px;
+      line-height: 1.08;
+      background: linear-gradient(135deg, #e0d7ff 0%, #a78bfa 45%, #60a5fa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 18px;
+      animation: fadeSlideUp .6s .15s ease both;
+    }
+
+    .hero-sub {
+      font-size: clamp(15px, 2.2vw, 18px);
+      color: var(--text-muted);
+      max-width: 540px;
+      margin: 0 auto 36px;
+      font-weight: 400;
+      animation: fadeSlideUp .6s .2s ease both;
+    }
+
+    /* CTA buttons */
+    .cta-group {
       display: flex;
       justify-content: center;
-      gap: 12px;
+      gap: 14px;
       flex-wrap: wrap;
-      margin-bottom: 20px;
+      animation: fadeSlideUp .6s .28s ease both;
     }
 
     .btn {
-      padding: 12px 22px;
-      border-radius: 10px;
-      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 26px;
+      border-radius: var(--radius-btn);
+      font-weight: 700;
+      font-size: 15px;
       text-decoration: none;
-      transition: 0.3s;
-      display: inline-block;
+      transition: transform .2s, box-shadow .2s, opacity .2s;
+      cursor: pointer;
+      border: none;
     }
 
-    .btn.primary {
-      background: linear-gradient(90deg, #7c3aed, #3b82f6);
-      color: white;
+    .btn-primary {
+      background: linear-gradient(135deg, var(--purple-1), var(--blue-1));
+      color: #fff;
+      box-shadow: 0 6px 24px var(--glow-purple);
     }
 
-    .btn.secondary {
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.3);
-      color: white;
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px var(--glow-purple);
+      opacity: .92;
     }
 
-    .btn:hover {
-      transform: scale(1.05);
+    .btn-secondary {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--text-primary);
+      backdrop-filter: blur(8px);
     }
 
-    /* FEATURES */
-    .features {
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.1);
+      transform: translateY(-2px);
+    }
+
+    /* Play Store icon */
+    .icon-play {
+      width: 20px;
+      height: 20px;
+      fill: white;
+    }
+
+    /* Social proof badges */
+    .social-proof {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 40px;
+      animation: fadeSlideUp .6s .38s ease both;
+    }
+
+    .social-badge {
+      display: flex;
+      align-items: center;
+      transition: transform .2s, filter .2s;
+    }
+
+    .social-badge:hover {
+      transform: translateY(-2px);
+      filter: drop-shadow(0 4px 12px rgba(124,58,237,.4));
+    }
+
+    .social-badge img {
+      display: block;
+      border-radius: 8px;
+    }
+
+    .social-divider {
+      width: 1px;
+      height: 36px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    /* ─────────────────────────────────────────
+       FEATURES
+    ───────────────────────────────────────── */
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #a78bfa;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 10px;
+    }
+
+    .section-sub {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 460px;
+      margin: 0 auto 48px;
+    }
+
+    .features-section {
+      text-align: center;
+      padding: 64px 0;
+    }
+
+    .features-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-      margin-top: 20px;
-    }
-
-    .feature {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.08);
-      padding: 15px;
-      border-radius: 12px;
-    }
-
-    /* CARD */
-    .card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 16px;
-      padding: 20px;
-      margin-top: 30px;
-    }
-
-    /* LEGAL */
-    .legal {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 14px;
-      padding: 18px;
-      margin-top: 20px;
+      gap: 16px;
       text-align: left;
     }
 
-    .legal h2 {
-      font-size: 18px;
-      margin-bottom: 10px;
-      color: #c7d2fe;
+    .feat-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-card);
+      padding: 24px 22px;
+      transition: background .25s, border-color .25s, transform .25s, box-shadow .25s;
+      position: relative;
+      overflow: hidden;
     }
 
-    .legal p {
+    .feat-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(124,58,237,.07) 0%, rgba(59,130,246,.05) 100%);
+      opacity: 0;
+      transition: opacity .3s;
+    }
+
+    .feat-card:hover {
+      background: var(--glass-hover);
+      border-color: rgba(124,58,237,.3);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,.35);
+    }
+
+    .feat-card:hover::before {
+      opacity: 1;
+    }
+
+    .feat-icon {
+      font-size: 28px;
+      margin-bottom: 14px;
+      display: block;
+      filter: drop-shadow(0 0 6px rgba(124,58,237,.5));
+    }
+
+    .feat-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #e8e4ff;
+    }
+
+    .feat-desc {
       font-size: 14px;
-      opacity: 0.8;
-      line-height: 1.5;
-      margin-bottom: 10px;
+      color: var(--text-muted);
+      line-height: 1.55;
     }
 
-    /* FOOTER */
-    footer {
-      margin-top: 40px;
+    /* ─────────────────────────────────────────
+       STATS STRIP
+    ───────────────────────────────────────── */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1px;
+      background: var(--glass-border);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      margin: 0 0 64px;
+    }
+
+    .stat-item {
+      background: var(--glass);
+      padding: 28px 20px;
+      text-align: center;
+      backdrop-filter: blur(8px);
+    }
+
+    .stat-num {
+      font-size: 32px;
+      font-weight: 900;
+      background: linear-gradient(90deg, #a78bfa, #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
       font-size: 13px;
-      opacity: 0.7;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* ─────────────────────────────────────────
+       INFO CARD
+    ───────────────────────────────────────── */
+    .info-card {
+      background: linear-gradient(135deg, rgba(124,58,237,.15) 0%, rgba(59,130,246,.1) 100%);
+      border: 1px solid rgba(124,58,237,.25);
+      border-radius: var(--radius-card);
+      padding: 36px 40px;
+      margin-bottom: 64px;
+      position: relative;
+      overflow: hidden;
       text-align: center;
     }
 
-    footer .links {
-      margin-top: 10px;
+    .info-card::before {
+      content: "";
+      position: absolute;
+      top: -40%;
+      right: -10%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(124,58,237,.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .info-card p {
+      font-size: clamp(16px, 2.2vw, 19px);
+      line-height: 1.65;
+      color: rgba(255,255,255,0.82);
+      max-width: 580px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .info-card p strong {
+      color: #c4b5fd;
+    }
+
+    /* ─────────────────────────────────────────
+       LEGAL
+    ───────────────────────────────────────── */
+    .legal-section {
       display: flex;
-      gap: 15px;
-      justify-content: center;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 64px;
+    }
+
+    .legal-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 24px 28px;
+    }
+
+    .legal-card h2 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #c7d2fe;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .legal-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 6px;
+    }
+
+    .legal-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ─────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--glass-border);
+      padding-top: 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      text-align: center;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footer-logo {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      opacity: .8;
+    }
+
+    .footer-name {
+      font-size: 15px;
+      font-weight: 700;
+      background: linear-gradient(90deg, #a78bfa, #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
       flex-wrap: wrap;
+      justify-content: center;
     }
 
-    footer a {
-      color: #93c5fd;
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-subtle);
       text-decoration: none;
+      transition: color .2s;
     }
 
-    footer a:hover {
-      text-decoration: underline;
+    .footer-links a:hover {
+      color: #93c5fd;
     }
 
-    /* MOBILE FIX */
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 36px;
-      }
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-subtle);
+    }
 
-      .subtitle {
-        font-size: 15px;
-      }
+    /* ─────────────────────────────────────────
+       ANIMATIONS
+    ───────────────────────────────────────── */
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Intersection observer animated cards */
+    .anim-in {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .55s ease, transform .55s ease;
+    }
+
+    .anim-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─────────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .hero { padding: 48px 0 40px; }
+      .info-card { padding: 28px 22px; }
+      .stats-strip { grid-template-columns: repeat(2, 1fr); }
+      .social-proof { gap: 14px; }
+      .social-divider { display: none; }
+    }
+
+    @media (max-width: 400px) {
+      .cta-group { flex-direction: column; align-items: center; }
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container">
+  <!-- Background layers -->
+  <div class="bg-aurora" aria-hidden="true"></div>
+  <div class="bg-dot-grid" aria-hidden="true"></div>
+
+  <div class="page">
+
+    <!-- NAV -->
+    <nav>
+      <a href="#" class="nav-brand" aria-label="Attenly home">
+        <img src="logo.png" class="nav-logo" alt="Attenly logo"/>
+        <span class="nav-name">Attenly</span>
+      </a>
+      <a
+        href="https://play.google.com/store/apps/details?id=com.paulbaruah.attenly&pcampaignid=web_share"
+        class="nav-cta"
+        target="_blank"
+        rel="noopener noreferrer"
+        id="nav-download-btn"
+      >
+        ↓ Get the App
+      </a>
+    </nav>
 
     <!-- HERO -->
-    <div class="hero">
-      <img src="logo.png" class="logo" alt="Attenly Logo"/>
+    <section class="hero">
+      <div class="hero-logo-wrap">
+        <img src="logo.png" class="hero-logo" alt="Attenly App Logo"/>
+      </div>
 
-      <h1>Attenly</h1>
+      <div class="badge-strip">
+        <span class="badge-dot"></span>
+        Now available on Google Play
+      </div>
 
-      <p class="subtitle">
-        Smart attendance, timetable & assignment tracker for students.<br/>
-        Simple. Fast. Reliable.
+      <h1>Never miss a class<br/>you can't afford to.</h1>
+
+      <p class="hero-sub">
+        Attenly is the smartest attendance tracker for students — built to
+        help you stay on track, plan your timetable, and know exactly when
+        it's <em>safe to skip</em>.
       </p>
 
-      <div class="cta">
-        <a 
-  href="https://play.google.com/store/apps/details?id=com.paulbaruah.attenly&pcampaignid=web_share" 
-  class="btn primary" 
-  target="_blank"
->
-  Download App
-</a>
-        <a href="#features" class="btn secondary">Explore Features</a>
+      <div class="cta-group">
+        <a
+          href="https://play.google.com/store/apps/details?id=com.paulbaruah.attenly&pcampaignid=web_share"
+          class="btn btn-primary"
+          target="_blank"
+          rel="noopener noreferrer"
+          id="hero-download-btn"
+        >
+          <svg class="icon-play" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M3 20.5v-17c0-.83 1-.83 1.5-.5l15 8.5c.45.26.45.74 0 1L4.5 21c-.5.33-1.5.33-1.5-.5z"/>
+          </svg>
+          Download on Play Store
+        </a>
+        <a href="#features" class="btn btn-secondary" id="hero-features-btn">
+          Explore Features ↓
+        </a>
+      </div>
+
+      <!-- SOCIAL PROOF BADGES -->
+      <div class="social-proof">
+        <a
+          class="social-badge"
+          href="https://www.shipit.buzz/products/attenly?ref=badge"
+          target="_blank"
+          rel="noopener noreferrer"
+          id="shipit-badge"
+          aria-label="Featured on ShipIt"
+        >
+          <img
+            src="https://www.shipit.buzz/api/products/attenly/badge?theme=dark"
+            alt="Featured on Shipit"
+            height="36"
+            loading="lazy"
+          />
+        </a>
+
+        <div class="social-divider" aria-hidden="true"></div>
+
+        <a
+          class="social-badge"
+          href="https://www.producthunt.com/products/attenly/reviews/new?utm_source=badge-product_review&utm_medium=badge&utm_source=badge-attenly"
+          target="_blank"
+          rel="noopener noreferrer"
+          id="producthunt-badge"
+          aria-label="Review Attenly on Product Hunt"
+        >
+          <img
+            src="https://api.producthunt.com/widgets/embed-image/v1/product_review.svg?product_id=1243517&theme=dark"
+            alt="Attenly - College attendance tracker with safe-skip planning | Product Hunt"
+            width="210"
+            height="45"
+            loading="lazy"
+            style="width:210px;height:45px;"
+          />
+        </a>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <div class="stats-strip anim-in" id="stats">
+      <div class="stat-item">
+        <div class="stat-num">75%</div>
+        <div class="stat-label">Min attendance rule</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">0</div>
+        <div class="stat-label">Data shared with servers</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">3-in-1</div>
+        <div class="stat-label">Attendance, timetable & tasks</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">Free</div>
+        <div class="stat-label">No paywalls, ever</div>
       </div>
     </div>
 
     <!-- FEATURES -->
-    <section id="features" class="features">
-      <div class="feature">📊 Attendance Tracking</div>
-      <div class="feature">📅 Smart Timetable</div>
-      <div class="feature">📝 Assignments</div>
-      <div class="feature">⚡ Safe-to-skip Logic</div>
+    <section class="features-section" id="features">
+      <p class="section-label">What it does</p>
+      <h2 class="section-title">Everything you need. Nothing you don't.</h2>
+      <p class="section-sub">Built for the college grind — from first day to finals week.</p>
+
+      <div class="features-grid">
+        <div class="feat-card anim-in">
+          <span class="feat-icon">📊</span>
+          <div class="feat-title">Attendance Tracking</div>
+          <p class="feat-desc">Log every class with a tap. See your attendance percentage update in real time — per subject, per week.</p>
+        </div>
+
+        <div class="feat-card anim-in">
+          <span class="feat-icon">⚡</span>
+          <div class="feat-title">Safe-to-Skip Logic</div>
+          <p class="feat-desc">Attenly calculates exactly how many classes you can skip without falling below the required attendance threshold.</p>
+        </div>
+
+        <div class="feat-card anim-in">
+          <span class="feat-icon">📅</span>
+          <div class="feat-title">Smart Timetable</div>
+          <p class="feat-desc">Set up your weekly schedule once. Attenly automatically tracks which subjects are due based on today's timetable.</p>
+        </div>
+
+        <div class="feat-card anim-in">
+          <span class="feat-icon">📝</span>
+          <div class="feat-title">Assignment Manager</div>
+          <p class="feat-desc">Keep track of deadlines, submissions, and pending assignments. Never miss a due date again.</p>
+        </div>
+
+        <div class="feat-card anim-in">
+          <span class="feat-icon">🔒</span>
+          <div class="feat-title">100% Private</div>
+          <p class="feat-desc">All your data lives on your device. No accounts, no cloud sync, no data collection. Pure privacy.</p>
+        </div>
+
+        <div class="feat-card anim-in">
+          <span class="feat-icon">🚀</span>
+          <div class="feat-title">Lightweight & Fast</div>
+          <p class="feat-desc">No bloat. No login screens. Attenly launches in seconds and gets out of your way.</p>
+        </div>
+      </div>
     </section>
 
     <!-- INFO CARD -->
-    <div class="card">
-      Built for students who want clarity, structure, and control over their academic routine.
+    <div class="info-card anim-in">
+      <p>
+        Built for students who want <strong>clarity, structure, and control</strong> over their
+        academic routine — without juggling five different apps. Attenly brings attendance,
+        timetables, and assignments into one clean, distraction-free interface.
+      </p>
     </div>
 
-    <!-- PRIVACY -->
-    <div class="legal" id="privacy">
-      <h2>Privacy Policy</h2>
-      <p>Attenly does not collect or store user data on external servers. All data stays on your device unless exported manually.</p>
-      <p>No data is sold or shared with third parties.</p>
-    </div>
+    <!-- LEGAL -->
+    <div class="legal-section">
+      <div class="legal-card anim-in" id="privacy">
+        <h2>🛡️ Privacy Policy</h2>
+        <p>Attenly does not collect or store user data on external servers. All data stays on your device unless exported manually.</p>
+        <p>No data is sold or shared with third parties.</p>
+      </div>
 
-    <!-- TERMS -->
-    <div class="legal" id="terms">
-      <h2>Terms of Use</h2>
-      <p>Attenly is provided as-is without warranties. Attendance predictions are for guidance only.</p>
-      <p>Users are responsible for how they use the app.</p>
-    </div>
+      <div class="legal-card anim-in" id="terms">
+        <h2>📄 Terms of Use</h2>
+        <p>Attenly is provided as-is without warranties. Attendance predictions are for guidance only.</p>
+        <p>Users are responsible for how they use the app.</p>
+      </div>
 
-    <!-- CONTACT -->
-    <div class="legal" id="contact">
-      <h2>Contact</h2>
-      <p>Email: attenly.support@example.com</p>
+      <div class="legal-card anim-in" id="contact">
+        <h2>✉️ Contact</h2>
+        <p>Email: <a href="mailto:attenly.support@example.com" style="color:#93c5fd;text-decoration:none;">attenly.support@example.com</a></p>
+      </div>
     </div>
 
     <!-- FOOTER -->
     <footer>
-      <p>© 2026 Attenly. All rights reserved.</p>
+      <div class="footer-brand">
+        <img src="logo.png" class="footer-logo" alt="Attenly"/>
+        <span class="footer-name">Attenly</span>
+      </div>
 
-      <div class="links">
-  <a href="#privacy">Privacy</a>
-  <a href="#terms">Terms</a>
-  <a href="#contact">Contact</a>
-  <a href="/app-ads.txt" target="_blank">app-ads.txt</a>
-</div>
+      <div class="footer-links">
+        <a href="#privacy">Privacy</a>
+        <a href="#terms">Terms</a>
+        <a href="#contact">Contact</a>
+        <a href="/app-ads.txt" target="_blank" rel="noopener noreferrer">app-ads.txt</a>
+        <a href="https://play.google.com/store/apps/details?id=com.paulbaruah.attenly&pcampaignid=web_share" target="_blank" rel="noopener noreferrer">Play Store</a>
+      </div>
+
+      <!-- Footer badges -->
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:center;">
+        <a href="https://www.shipit.buzz/products/attenly?ref=badge" target="_blank" rel="noopener noreferrer" aria-label="Featured on ShipIt">
+          <img src="https://www.shipit.buzz/api/products/attenly/badge?theme=light" alt="Featured on Shipit" height="28" loading="lazy" style="border-radius:6px;"/>
+        </a>
+        <a href="https://www.producthunt.com/products/attenly/reviews/new?utm_source=badge-product_review&utm_medium=badge&utm_source=badge-attenly" target="_blank" rel="noopener noreferrer" aria-label="Review on Product Hunt">
+          <img src="https://api.producthunt.com/widgets/embed-image/v1/product_review.svg?product_id=1243517&theme=light" alt="Attenly on Product Hunt" width="160" height="34" loading="lazy" style="width:160px;height:34px;border-radius:6px;"/>
+        </a>
+      </div>
+
+      <p class="footer-copy">© 2026 Attenly. All rights reserved.</p>
     </footer>
 
   </div>
+
+  <!-- INTERSECTION OBSERVER for scroll animations -->
+  <script>
+    (function () {
+      const els = document.querySelectorAll('.anim-in');
+      if (!window.IntersectionObserver) {
+        els.forEach(el => el.classList.add('visible'));
+        return;
+      }
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+          if (entry.isIntersecting) {
+            // Stagger siblings inside the same parent
+            const siblings = Array.from(entry.target.parentElement.querySelectorAll('.anim-in'));
+            const idx = siblings.indexOf(entry.target);
+            setTimeout(() => {
+              entry.target.classList.add('visible');
+            }, idx * 80);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      els.forEach(el => observer.observe(el));
+    })();
+  </script>
 
 </body>
 </html>
