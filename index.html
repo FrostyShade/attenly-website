@@ -119,6 +119,8 @@
       transition:opacity .2s,transform .2s,box-shadow .2s;
     }
     .nav-btn:hover { opacity:.88; transform:translateY(-1px); box-shadow:0 8px 28px rgba(124,58,237,.5); }
+    .nav-badge-link { display:inline-flex; align-items:center; transition:opacity .2s,transform .2s; }
+    .nav-badge-link:hover { opacity:.85; transform:translateY(-1px); }
     @media(max-width:500px){ nav { padding:0 20px; } .nav-link { display:none; } }
 
     /* ============================================================
@@ -570,9 +572,8 @@
     <div class="nav-right">
 
       <a href="#faq" class="nav-link">FAQ</a>
-      <a href="https://play.google.com/store/apps/details?id=com.paulbaruah.attenly&pcampaignid=web_share" class="nav-btn" target="_blank" rel="noopener noreferrer" id="nav-download">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 20.5v-17c0-.83 1-.83 1.5-.5l15 8.5c.45.26.45.74 0 1L6.5 21C6 21.33 5 21.33 5 20.5z"/></svg>
-        Download
+      <a href="https://play.google.com/store/apps/details?id=com.paulbaruah.attenly&pcampaignid=web_share" class="nav-badge-link" target="_blank" rel="noopener noreferrer" id="nav-download">
+        <img src="play-store-badge.png?v=2" alt="Get it on Google Play" width="120" height="36" style="display:block; object-fit:contain;"/>
       </a>
     </div>
   </nav>
