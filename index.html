@@ -622,26 +622,19 @@
   </div>
 </section>
 
-<!-- ══════════ LIVE STATS ══════════ -->
+<!-- ══════════ STATS ══════════ -->
 <section class="stats-section wrap" aria-label="App statistics">
   <div class="stats-grid reveal">
     <div class="stat-item">
-      <div class="live-badge"><span class="live-dot"></span>Live</div>
-      <div class="stat-val" id="stat-rating"><div class="stat-skeleton"></div></div>
+      <div class="stat-val" id="stat-rating">⭐ 5.0</div>
       <div class="stat-label">Play Store Rating</div>
     </div>
     <div class="stat-item">
-      <div class="live-badge"><span class="live-dot"></span>Live</div>
-      <div class="stat-val" id="stat-downloads"><div class="stat-skeleton"></div></div>
+      <div class="stat-val" id="stat-downloads">50+</div>
       <div class="stat-label">Downloads</div>
     </div>
     <div class="stat-item">
-      <div class="live-badge"><span class="live-dot"></span>Live</div>
-      <div class="stat-val" id="stat-reviews"><div class="stat-skeleton"></div></div>
-      <div class="stat-label">Reviews</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-val" id="stat-privacy" style="font-size:22px;">🔒 On-Device</div>
+      <div class="stat-val" style="font-size:22px;">🔒 On-Device</div>
       <div class="stat-label">Zero data collected</div>
     </div>
   </div>
@@ -992,78 +985,35 @@ function animateCount(el, target, suffix, duration) {
 }
 
 /* ============================================================
-   3. PLAY STORE LIVE STATS
-   Attempts to scrape via CORS proxy; falls back gracefully.
+   3. STATS COUNT-UP (fires once on scroll into view)
 ============================================================ */
-(async function loadPlayStoreStats(){
-  const PACKAGE = 'com.paulbaruah.attenly';
-  const ratingEl   = document.getElementById('stat-rating');
-  const dlEl       = document.getElementById('stat-downloads');
-  const reviewsEl  = document.getElementById('stat-reviews');
+(function(){
+  const ratingEl = document.getElementById('stat-rating');
+  const dlEl     = document.getElementById('stat-downloads');
+  const grid     = document.querySelector('.stats-grid');
+  if (!ratingEl || !dlEl || !grid) return;
 
-  // Helper: replace skeleton with value
-  function setVal(el, html) {
-    el.style.setProperty('-webkit-text-fill-color','');
-    el.innerHTML = html;
-  }
-  function setLink(el, text) {
-    el.style.cssText = 'font-size:13px; background:none; -webkit-text-fill-color:rgba(241,240,255,0.55);';
-    el.innerHTML = `<a href="https://play.google.com/store/apps/details?id=${PACKAGE}" target="_blank" rel="noopener noreferrer" style="color:#818cf8;text-decoration:none;">See on Play Store →</a>`;
-  }
+  let fired = false;
+  const io = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting && !fired) {
+      fired = true;
+      io.disconnect();
 
-  try {
-    const url = `https://play.google.com/store/apps/details?id=${PACKAGE}&hl=en&gl=IN`;
-    const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+      // Rating: 0.0 → 5.0, one decimal place, with star prefix
+      const RDUR = 1400;
+      const rStart = performance.now();
+      (function stepR(now) {
+        const p = Math.min((now - rStart) / RDUR, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        ratingEl.textContent = '⭐ ' + (eased * 5).toFixed(1);
+        if (p < 1) requestAnimationFrame(stepR);
+      })(performance.now());
 
-    const controller = new AbortController();
-    const timer = setTimeout(()=>controller.abort(), 8000);
-
-    const res = await fetch(proxy, { signal: controller.signal });
-    clearTimeout(timer);
-    if (!res.ok) throw new Error('proxy error');
-
-    const data = await res.json();
-    const html = data.contents || '';
-
-    /* --- Rating from JSON-LD aggregateRating --- */
-    const ratingM = html.match(/"ratingValue"\s*:\s*"?([\d.]+)"?/);
-    /* --- Review count --- */
-    const reviewM = html.match(/"ratingCount"\s*:\s*"?([\d,]+)"?/);
-    /* --- Installs: Play Store embeds as e.g. "1,000+" in specific patterns --- */
-    const installM = html.match(/(\d[\d,.]*[KMB+]+)\s*downloads/i)
-                  || html.match(/"numDownloads"\s*:\s*"([^"]+)"/)
-                  || html.match(/Downloads<\/div>[^>]*>([^<]+)</);
-
-    if (ratingM) {
-      const r = parseFloat(ratingM[1]).toFixed(1);
-      setVal(ratingEl, `⭐ ${r}`);
-    } else {
-      setLink(ratingEl);
+      // Downloads: 0 → 50 with + suffix
+      animateCount(dlEl, 50, '+', 1600);
     }
-
-    if (reviewM) {
-      const n = parseInt(reviewM[1].replace(/,/g,''));
-      setVal(reviewsEl, '');
-      animateCount(reviewsEl, n, '+', 1600);
-    } else {
-      setLink(reviewsEl);
-    }
-
-    if (installM) {
-      setVal(dlEl, installM[1].trim());
-    } else {
-      setLink(dlEl);
-    }
-
-  } catch(e) {
-    // All three fallback to Play Store link
-    [document.getElementById('stat-rating'),
-     document.getElementById('stat-downloads'),
-     document.getElementById('stat-reviews')].forEach(el=>{
-      el.style.cssText = 'font-size:13px; background:none; -webkit-text-fill-color:rgba(241,240,255,0.55);';
-      el.innerHTML = `<a href="https://play.google.com/store/apps/details?id=com.paulbaruah.attenly" target="_blank" rel="noopener noreferrer" style="color:#818cf8;text-decoration:none;font-size:12px;">See on Play Store →</a>`;
-    });
-  }
+  }, { threshold: 0.5 });
+  io.observe(grid);
 })();
 
 /* ============================================================
