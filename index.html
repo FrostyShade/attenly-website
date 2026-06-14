@@ -5,692 +5,629 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Attenly — Smart Attendance Tracker for College Students</title>
   <meta name="description" content="Attenly helps college students track attendance, manage timetables, plan assignments, and know exactly when it's safe to skip — all on-device, no account needed."/>
-  <meta property="og:title" content="Attenly — Smart Attendance Tracker"/>
+  <meta name="keywords" content="attendance tracker, college app, timetable, assignment tracker, safe to skip, student app, Android"/>
+  <meta property="og:title" content="Attenly — Smart Attendance Tracker for College Students"/>
   <meta property="og:description" content="Track classes, plan your week, manage assignments. Know exactly when it's safe to skip."/>
   <meta property="og:image" content="screenshots/image1.png"/>
+  <meta property="og:type" content="website"/>
   <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Attenly — Smart Attendance Tracker"/>
+  <meta name="twitter:description" content="Track attendance, timetables & assignments. Know when it's safe to skip."/>
+  <link rel="canonical" href="https://frostyshade.github.io/attenly-website/"/>
   <link rel="icon" type="image/png" href="logo.png"/>
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml"/>
 
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 
   <style>
-    /* =============================================
-       TOKENS
-    ============================================= */
+    /* ============================================================
+       DESIGN TOKENS
+    ============================================================ */
     :root {
-      --c-bg:        #07070e;
-      --c-surface:   #0f0f1a;
-      --c-surface2:  #141426;
-      --c-border:    rgba(255,255,255,0.07);
-      --c-border2:   rgba(255,255,255,0.12);
-      --c-purple:    #7c3aed;
-      --c-purple-l:  #9333ea;
-      --c-violet:    #a855f7;
-      --c-blue:      #3b82f6;
-      --c-text:      #f1f0ff;
-      --c-muted:     rgba(241,240,255,0.55);
-      --c-subtle:    rgba(241,240,255,0.32);
-      --glow-p:      rgba(124,58,237,0.4);
-      --glow-b:      rgba(59,130,246,0.25);
-      --r-xl:        24px;
-      --r-lg:        16px;
-      --r-md:        12px;
-      --max-w:       1100px;
+      --c-bg:       #07070e;
+      --c-surface:  #0f0f1a;
+      --c-surface2: #141426;
+      --c-border:   rgba(255,255,255,0.07);
+      --c-border2:  rgba(255,255,255,0.12);
+      --c-purple:   #7c3aed;
+      --c-violet:   #a855f7;
+      --c-blue:     #3b82f6;
+      --c-text:     #f1f0ff;
+      --c-muted:    rgba(241,240,255,0.55);
+      --c-subtle:   rgba(241,240,255,0.32);
+      --glow-p:     rgba(124,58,237,0.4);
+      --r-xl:       24px;
+      --r-lg:       16px;
+      --r-md:       12px;
+      --max-w:      1100px;
     }
 
-    /* =============================================
-       RESET & BASE
-    ============================================= */
+    /* ============================================================
+       BASE
+    ============================================================ */
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-    html { scroll-behavior:smooth; font-size:16px; }
-
+    html { scroll-behavior:smooth; }
     body {
-      font-family: 'Inter', sans-serif;
-      background: var(--c-bg);
-      color: var(--c-text);
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
+      font-family:'Inter',sans-serif;
+      background:var(--c-bg);
+      color:var(--c-text);
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
     }
 
-    /* =============================================
-       BACKGROUND NOISE + GLOW
-    ============================================= */
+    /* ============================================================
+       BACKGROUND
+    ============================================================ */
     .bg-layer {
-      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      position:fixed; inset:0; z-index:0; pointer-events:none;
     }
     .bg-layer::before {
-      content: '';
-      position: absolute; inset: 0;
+      content:''; position:absolute; inset:0;
       background:
-        radial-gradient(ellipse 80vw 60vh at 15% 10%, rgba(124,58,237,.18) 0%, transparent 60%),
-        radial-gradient(ellipse 60vw 50vh at 85% 80%, rgba(59,130,246,.12) 0%, transparent 60%);
+        radial-gradient(ellipse 80vw 60vh at 15% 10%,rgba(124,58,237,.18) 0%,transparent 60%),
+        radial-gradient(ellipse 60vw 50vh at 85% 80%,rgba(59,130,246,.12) 0%,transparent 60%);
     }
     .bg-layer::after {
-      content: '';
-      position: absolute; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-      opacity: .5;
+      content:''; position:absolute; inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      opacity:.5;
     }
 
-    /* =============================================
-       LAYOUT WRAPPER
-    ============================================= */
+    /* ============================================================
+       LAYOUT
+    ============================================================ */
     .wrap {
-      position: relative; z-index: 1;
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 32px;
+      position:relative; z-index:1;
+      max-width:var(--max-w);
+      margin:0 auto;
+      padding:0 32px;
     }
-    @media(max-width:640px){ .wrap { padding: 0 20px; } }
+    @media(max-width:640px){ .wrap { padding:0 20px; } }
 
-    /* =============================================
+    /* ============================================================
        NAV
-    ============================================= */
+    ============================================================ */
     header {
-      position: sticky; top: 0; z-index: 100;
-      border-bottom: 1px solid var(--c-border);
-      background: rgba(7,7,14,.82);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+      position:sticky; top:0; z-index:100;
+      border-bottom:1px solid var(--c-border);
+      background:rgba(7,7,14,.85);
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
     }
     nav {
-      display: flex; align-items: center;
-      justify-content: space-between;
-      height: 64px;
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 32px;
+      display:flex; align-items:center; justify-content:space-between;
+      height:64px; max-width:var(--max-w); margin:0 auto; padding:0 32px;
     }
-    .nav-brand {
-      display: flex; align-items: center; gap: 10px;
-      text-decoration: none; color: var(--c-text);
-    }
-    .nav-brand img {
-      width: 34px; height: 34px;
-      border-radius: 9px;
-      box-shadow: 0 0 16px rgba(124,58,237,.5);
-    }
+    .nav-brand { display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--c-text); }
+    .nav-brand img { width:34px; height:34px; border-radius:9px; box-shadow:0 0 16px rgba(124,58,237,.5); }
     .nav-brand span {
-      font-size: 17px; font-weight: 800; letter-spacing: -.3px;
-      background: linear-gradient(90deg,#c4b5fd,#818cf8);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      font-size:17px; font-weight:800; letter-spacing:-.3px;
+      background:linear-gradient(90deg,#c4b5fd,#818cf8);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
     }
-    .nav-right { display: flex; align-items: center; gap: 12px; }
-    .nav-link {
-      font-size: 14px; font-weight: 500;
-      color: var(--c-muted); text-decoration: none;
-      transition: color .2s;
-    }
-    .nav-link:hover { color: var(--c-text); }
+    .nav-right { display:flex; align-items:center; gap:12px; }
+    .nav-link { font-size:14px; font-weight:500; color:var(--c-muted); text-decoration:none; transition:color .2s; }
+    .nav-link:hover { color:var(--c-text); }
     .nav-btn {
-      display: inline-flex; align-items: center; gap: 7px;
-      padding: 9px 18px;
-      background: linear-gradient(135deg, var(--c-purple), #6366f1);
-      color: #fff; text-decoration: none;
-      font-size: 14px; font-weight: 700;
-      border-radius: var(--r-md);
-      box-shadow: 0 4px 20px rgba(124,58,237,.4);
-      transition: opacity .2s, transform .2s, box-shadow .2s;
+      display:inline-flex; align-items:center; gap:7px;
+      padding:9px 18px;
+      background:linear-gradient(135deg,var(--c-purple),#6366f1);
+      color:#fff; text-decoration:none; font-size:14px; font-weight:700;
+      border-radius:var(--r-md); box-shadow:0 4px 20px rgba(124,58,237,.4);
+      transition:opacity .2s,transform .2s,box-shadow .2s;
     }
-    .nav-btn:hover {
-      opacity: .88; transform: translateY(-1px);
-      box-shadow: 0 8px 28px rgba(124,58,237,.5);
-    }
-    @media(max-width:500px){
-      nav { padding: 0 20px; }
-      .nav-link { display: none; }
-    }
+    .nav-btn:hover { opacity:.88; transform:translateY(-1px); box-shadow:0 8px 28px rgba(124,58,237,.5); }
+    @media(max-width:500px){ nav { padding:0 20px; } .nav-link { display:none; } }
 
-    /* =============================================
+    /* ============================================================
        HERO
-    ============================================= */
+    ============================================================ */
     .hero {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      gap: 60px;
-      padding: 96px 0 80px;
+      display:grid; grid-template-columns:1fr 1fr;
+      align-items:center; gap:60px; padding:96px 0 80px;
     }
-    .hero-text { }
     .hero-eyebrow {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 5px 14px 5px 6px;
-      background: rgba(124,58,237,.12);
-      border: 1px solid rgba(124,58,237,.28);
-      border-radius: 999px;
-      font-size: 12px; font-weight: 600;
-      color: #c4b5fd;
-      margin-bottom: 24px;
-      animation: fadeUp .5s ease both;
+      display:inline-flex; align-items:center; gap:8px;
+      padding:5px 14px 5px 6px;
+      background:rgba(124,58,237,.12); border:1px solid rgba(124,58,237,.28);
+      border-radius:999px; font-size:12px; font-weight:600; color:#c4b5fd;
+      margin-bottom:24px; animation:fadeUp .5s ease both;
     }
     .eyebrow-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: #a855f7;
-      box-shadow: 0 0 8px #a855f7;
-      animation: pulse 2.2s ease-in-out infinite;
+      width:8px; height:8px; border-radius:50%;
+      background:#a855f7; box-shadow:0 0 8px #a855f7;
+      animation:blink 2.2s ease-in-out infinite;
     }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
-
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
     .hero h1 {
-      font-size: clamp(36px,5vw,58px);
-      font-weight: 900;
-      letter-spacing: -2.5px;
-      line-height: 1.06;
-      color: var(--c-text);
-      margin-bottom: 20px;
-      animation: fadeUp .5s .07s ease both;
+      font-size:clamp(36px,5vw,58px); font-weight:900;
+      letter-spacing:-2.5px; line-height:1.06; margin-bottom:20px;
+      animation:fadeUp .5s .07s ease both;
     }
     .hero h1 em {
-      font-style: normal;
-      background: linear-gradient(135deg, #c084fc, #818cf8 50%, #60a5fa);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      font-style:normal;
+      background:linear-gradient(135deg,#c084fc,#818cf8 50%,#60a5fa);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
     }
-
     .hero-sub {
-      font-size: 17px; font-weight: 400;
-      line-height: 1.7;
-      color: var(--c-muted);
-      max-width: 440px;
-      margin-bottom: 36px;
-      animation: fadeUp .5s .12s ease both;
+      font-size:17px; line-height:1.7; color:var(--c-muted);
+      max-width:440px; margin-bottom:36px;
+      animation:fadeUp .5s .12s ease both;
     }
+    .hero-cta { display:flex; align-items:center; gap:12px; flex-wrap:wrap; animation:fadeUp .5s .18s ease both; }
 
-    .hero-cta {
-      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
-      animation: fadeUp .5s .18s ease both;
-    }
+    /* Buttons */
     .btn-main {
-      display: inline-flex; align-items: center; gap: 9px;
-      padding: 14px 24px;
-      background: linear-gradient(135deg, var(--c-purple), #6366f1);
-      color: #fff; text-decoration: none;
-      font-size: 15px; font-weight: 700;
-      border-radius: var(--r-md);
-      box-shadow: 0 6px 28px rgba(124,58,237,.45);
-      transition: transform .2s, box-shadow .2s, opacity .2s;
+      display:inline-flex; align-items:center; gap:9px;
+      padding:14px 24px;
+      background:linear-gradient(135deg,var(--c-purple),#6366f1);
+      color:#fff; text-decoration:none; font-size:15px; font-weight:700;
+      border-radius:var(--r-md); box-shadow:0 6px 28px rgba(124,58,237,.45);
+      transition:transform .2s,box-shadow .2s,opacity .2s;
     }
-    .btn-main:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(124,58,237,.55); opacity:.92; }
+    .btn-main:hover { transform:translateY(-2px); box-shadow:0 12px 36px rgba(124,58,237,.55); opacity:.92; }
     .btn-ghost {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 14px 22px;
-      background: transparent;
-      border: 1px solid var(--c-border2);
-      color: var(--c-text); text-decoration: none;
-      font-size: 15px; font-weight: 600;
-      border-radius: var(--r-md);
-      transition: background .2s, transform .2s;
+      display:inline-flex; align-items:center; gap:8px;
+      padding:14px 22px; background:transparent;
+      border:1px solid var(--c-border2); color:var(--c-text);
+      text-decoration:none; font-size:15px; font-weight:600;
+      border-radius:var(--r-md); transition:background .2s,transform .2s;
     }
-    .btn-ghost:hover { background: rgba(255,255,255,.06); transform: translateY(-2px); }
+    .btn-ghost:hover { background:rgba(255,255,255,.06); transform:translateY(-2px); }
 
-    /* ── hero phone showcase ── */
-    /* The showcase is wider than the phone so badges
-       always live inside it, never clipped by overflow-x:hidden */
-    .hero-visual {
-      display: flex; justify-content: center; align-items: center;
-      animation: fadeUp .6s .2s ease both;
-    }
+    /* Hero phone showcase */
+    .hero-visual { display:flex; justify-content:center; align-items:center; animation:fadeUp .6s .2s ease both; }
     .phone-showcase {
-      /* phone 260px + ~80px breathing room each side for badges */
-      position: relative;
-      width: 420px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-shrink: 0;
+      position:relative; width:420px;
+      display:flex; justify-content:center; align-items:center; flex-shrink:0;
     }
-    .phone-frame {
-      position: relative;
-      width: 260px;
-      flex-shrink: 0;
-      z-index: 1;
-    }
+    .phone-frame { position:relative; width:260px; flex-shrink:0; z-index:1; }
     .phone-frame::before {
-      content: '';
-      position: absolute; inset: -2px;
-      border-radius: 46px;
-      background: linear-gradient(160deg, rgba(168,85,247,.5), rgba(99,102,241,.3), rgba(59,130,246,.2));
-      z-index: -1;
-      filter: blur(2px);
+      content:''; position:absolute; inset:-2px; border-radius:46px;
+      background:linear-gradient(160deg,rgba(168,85,247,.5),rgba(99,102,241,.3),rgba(59,130,246,.2));
+      z-index:-1; filter:blur(2px);
     }
-    .phone-frame img {
-      width: 100%;
-      border-radius: 44px;
-      box-shadow: 0 32px 80px rgba(0,0,0,.7), 0 0 60px rgba(124,58,237,.2);
-      display: block;
-    }
+    .phone-frame img { width:100%; border-radius:44px; box-shadow:0 32px 80px rgba(0,0,0,.7),0 0 60px rgba(124,58,237,.2); display:block; }
 
-    /* Floating stat badges — positioned relative to .phone-showcase */
+    /* Floating stat badges — positioned relative to showcase */
     .hero-float-badge {
-      position: absolute;
-      display: flex; align-items: center; gap: 8px;
-      background: rgba(10,10,20,.9);
-      border: 1px solid rgba(168,85,247,.3);
-      border-radius: 14px;
-      padding: 10px 14px;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      font-size: 13px; font-weight: 600; color: var(--c-text);
-      white-space: nowrap;
-      z-index: 2;
-      /* GPU-accelerated so it stays above phone */
-      will-change: transform;
+      position:absolute;
+      display:flex; align-items:center; gap:8px;
+      background:rgba(10,10,20,.9); border:1px solid rgba(168,85,247,.3);
+      border-radius:14px; padding:10px 14px;
+      backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+      font-size:13px; font-weight:600; color:var(--c-text);
+      white-space:nowrap; z-index:2; will-change:transform;
     }
-    /* Left badge: top-left of showcase, overlaps phone left edge */
-    .hfb-1 {
-      top: 18%;
-      left: 0;
-      animation: floatA 4s ease-in-out infinite;
-    }
-    /* Right badge: lower-right of showcase, overlaps phone right edge */
-    .hfb-2 {
-      bottom: 20%;
-      right: 0;
-      animation: floatB 4s 1.5s ease-in-out infinite;
-    }
+    .hfb-1 { top:18%; left:0; animation:floatA 4s ease-in-out infinite; }
+    .hfb-2 { bottom:20%; right:0; animation:floatB 4s 1.5s ease-in-out infinite; }
     @keyframes floatA { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
     @keyframes floatB { 0%,100%{transform:translateY(0)} 50%{transform:translateY(7px)} }
-    .hfb-icon { font-size: 18px; line-height: 1; }
-    .hfb-title { font-size: 13px; font-weight: 600; line-height: 1.2; }
-    .hfb-label { font-size: 11px; font-weight: 400; color: var(--c-muted); line-height: 1.2; }
+    .hfb-icon { font-size:18px; line-height:1; }
+    .hfb-title { font-size:13px; font-weight:600; line-height:1.2; }
+    .hfb-label { font-size:11px; font-weight:400; color:var(--c-muted); line-height:1.2; }
 
-    /* ── Hero responsive ── */
+    /* Hero responsive */
     @media(max-width:860px){
-      .hero {
-        grid-template-columns: 1fr;
-        text-align: center;
-        gap: 48px;
-        padding: 64px 0 56px;
-      }
-      .hero-sub { max-width: 100%; margin: 0 auto 32px; }
-      .hero-cta { justify-content: center; }
-      .hero-visual { order: -1; }
-      /* Shrink showcase; keep enough room for badges */
-      .phone-showcase { width: 340px; }
-      .phone-frame { width: 200px; }
-      .hero-float-badge { padding: 8px 12px; font-size: 12px; }
-      .hfb-icon { font-size: 16px; }
-      .hfb-title { font-size: 12px; }
-      .hfb-label { font-size: 10px; }
+      .hero { grid-template-columns:1fr; text-align:center; gap:48px; padding:64px 0 56px; }
+      .hero-sub { max-width:100%; margin:0 auto 32px; }
+      .hero-cta { justify-content:center; }
+      .hero-visual { order:-1; }
+      .phone-showcase { width:340px; }
+      .phone-frame { width:200px; }
+      .hero-float-badge { padding:8px 12px; font-size:12px; }
+      .hfb-icon { font-size:16px; }
+      .hfb-title { font-size:12px; }
+      .hfb-label { font-size:10px; }
     }
     @media(max-width:480px){
-      .hero { padding: 52px 0 44px; gap: 36px; }
-      .hero h1 { letter-spacing: -1.5px; }
-      /* Phone + badges still fit — showcase constrains them to the container */
-      .phone-showcase { width: 300px; }
-      .phone-frame { width: 175px; }
-      /* Compact badges for small screens */
-      .hero-float-badge { padding: 7px 10px; gap: 6px; border-radius: 11px; }
-      .hfb-icon { font-size: 15px; }
-      .hfb-title { font-size: 11px; }
-      .hfb-label { font-size: 10px; }
+      .hero { padding:52px 0 44px; gap:36px; }
+      .hero h1 { letter-spacing:-1.5px; }
+      .phone-showcase { width:300px; }
+      .phone-frame { width:175px; }
+      .hero-float-badge { padding:7px 10px; gap:6px; border-radius:11px; }
+      .hfb-icon { font-size:15px; } .hfb-title { font-size:11px; } .hfb-label { font-size:10px; }
     }
-    @media(max-width:360px){
-      .phone-showcase { width: 270px; }
-      .phone-frame { width: 158px; }
-    }
+    @media(max-width:360px){ .phone-showcase { width:270px; } .phone-frame { width:158px; } }
 
-    /* =============================================
-       BADGE / SOCIAL PROOF SECTION
-    ============================================= */
-    .proof-section {
-      padding: 0 0 72px;
+    /* ============================================================
+       LIVE STATS STRIP
+    ============================================================ */
+    .stats-section { padding:0 0 64px; }
+    .stats-grid {
+      display:grid; grid-template-columns:repeat(4,1fr);
+      border:1px solid var(--c-border); border-radius:var(--r-xl);
+      overflow:hidden; background:var(--c-surface);
     }
+    .stat-item {
+      padding:28px 20px; text-align:center;
+      border-right:1px solid var(--c-border);
+      position:relative;
+    }
+    .stat-item:last-child { border-right:none; }
+    .stat-val {
+      font-size:30px; font-weight:900; letter-spacing:-1px; line-height:1;
+      background:linear-gradient(135deg,#c084fc,#818cf8);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      margin-bottom:6px; min-height:36px;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .stat-label { font-size:13px; color:var(--c-muted); font-weight:500; }
+    /* Skeleton shimmer */
+    .stat-skeleton {
+      width:80px; height:30px; border-radius:6px;
+      background:linear-gradient(90deg,rgba(255,255,255,.04) 25%,rgba(255,255,255,.09) 50%,rgba(255,255,255,.04) 75%);
+      background-size:200% 100%;
+      animation:shimmer 1.5s infinite;
+    }
+    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+    /* Live indicator */
+    .live-badge {
+      position:absolute; top:10px; right:10px;
+      display:flex; align-items:center; gap:4px;
+      font-size:9px; font-weight:700; letter-spacing:.06em;
+      text-transform:uppercase; color:#a78bfa; opacity:.7;
+    }
+    .live-dot {
+      width:5px; height:5px; border-radius:50%;
+      background:#a78bfa; animation:blink 2s infinite;
+    }
+    @media(max-width:700px){ .stats-grid { grid-template-columns:repeat(2,1fr); } .stat-item:nth-child(2) { border-right:none; } .stat-item:nth-child(1),.stat-item:nth-child(2) { border-bottom:1px solid var(--c-border); } }
+    @media(max-width:400px){ .stats-grid { grid-template-columns:1fr; } .stat-item { border-right:none !important; border-bottom:1px solid var(--c-border); } .stat-item:last-child { border-bottom:none; } }
+
+    /* ============================================================
+       SOCIAL PROOF / BADGES
+    ============================================================ */
+    .proof-section { padding:0 0 72px; }
     .proof-inner {
-      background: linear-gradient(135deg, rgba(124,58,237,.1) 0%, rgba(99,102,241,.08) 50%, rgba(59,130,246,.07) 100%);
-      border: 1px solid rgba(124,58,237,.2);
-      border-radius: var(--r-xl);
-      padding: 40px 48px;
-      display: flex;
-      align-items: center;
-      gap: 48px;
+      background:linear-gradient(135deg,rgba(124,58,237,.1) 0%,rgba(99,102,241,.08) 50%,rgba(59,130,246,.07) 100%);
+      border:1px solid rgba(124,58,237,.2); border-radius:var(--r-xl);
+      padding:40px 48px; display:flex; align-items:center; gap:48px;
     }
-    .proof-text { flex: 1; }
-    .proof-kicker {
-      font-size: 11px; font-weight: 700; letter-spacing: .12em;
-      text-transform: uppercase; color: #a78bfa;
-      margin-bottom: 8px;
-    }
-    .proof-headline {
-      font-size: 22px; font-weight: 800; letter-spacing: -.5px;
-      line-height: 1.3; color: var(--c-text);
-      margin-bottom: 10px;
-    }
-    .proof-desc {
-      font-size: 14px; color: var(--c-muted); line-height: 1.6; max-width: 320px;
-    }
-    .proof-badges {
-      display: flex; flex-direction: column; gap: 14px; align-items: flex-end; flex-shrink: 0;
-    }
-    .proof-badge-wrap {
-      display: flex; flex-direction: column; gap: 4px; align-items: flex-end;
-    }
-    .proof-badge-label {
-      font-size: 10px; font-weight: 600; letter-spacing: .08em;
-      text-transform: uppercase; color: var(--c-subtle);
-    }
+    .proof-text { flex:1; }
+    .proof-kicker { font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#a78bfa; margin-bottom:8px; }
+    .proof-headline { font-size:22px; font-weight:800; letter-spacing:-.5px; line-height:1.3; margin-bottom:10px; }
+    .proof-desc { font-size:14px; color:var(--c-muted); line-height:1.6; max-width:320px; }
+    .proof-badges { display:flex; flex-direction:column; gap:14px; align-items:flex-end; flex-shrink:0; }
+    .proof-badge-wrap { display:flex; flex-direction:column; gap:4px; align-items:flex-end; }
+    .proof-badge-label { font-size:10px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--c-subtle); }
     .proof-badge-link {
-      display: inline-block;
-      border-radius: 10px;
-      transition: transform .2s, filter .2s;
-      filter: drop-shadow(0 4px 12px rgba(124,58,237,.25));
+      display:inline-block; border-radius:10px;
+      transition:transform .2s,filter .2s;
+      filter:drop-shadow(0 4px 12px rgba(124,58,237,.25));
     }
-    .proof-badge-link:hover {
-      transform: translateY(-2px) scale(1.02);
-      filter: drop-shadow(0 8px 20px rgba(124,58,237,.45));
-    }
-    .proof-badge-link img { display: block; border-radius: 8px; }
-    .proof-divider {
-      width: 1px; height: 48px;
-      background: rgba(255,255,255,.08);
-      flex-shrink: 0;
-    }
+    .proof-badge-link:hover { transform:translateY(-2px) scale(1.02); filter:drop-shadow(0 8px 20px rgba(124,58,237,.45)); }
+    .proof-badge-link img { display:block; border-radius:8px; }
+    .proof-divider { width:1px; height:48px; background:rgba(255,255,255,.08); flex-shrink:0; }
     @media(max-width:860px){
-      .proof-inner { flex-direction: column; padding: 32px 28px; gap: 28px; text-align: center; }
-      .proof-text { text-align: center; }
-      .proof-desc { max-width: 100%; }
-      .proof-badges { flex-direction: row; align-items: center; justify-content: center; flex-wrap: wrap; }
-      .proof-badge-wrap { align-items: center; }
-      .proof-divider { width: 32px; height: 1px; }
+      .proof-inner { flex-direction:column; padding:32px 28px; gap:28px; text-align:center; }
+      .proof-text { text-align:center; } .proof-desc { max-width:100%; }
+      .proof-badges { flex-direction:row; align-items:center; justify-content:center; flex-wrap:wrap; }
+      .proof-badge-wrap { align-items:center; } .proof-divider { width:32px; height:1px; }
     }
 
-    /* =============================================
-       SECTION CHROME
-    ============================================= */
-    .section-kicker {
-      font-size: 11px; font-weight: 700; letter-spacing: .12em;
-      text-transform: uppercase; color: #a78bfa;
-      margin-bottom: 10px;
+    /* ============================================================
+       SCREENSHOT CAROUSEL
+    ============================================================ */
+    .carousel-section { padding:0 0 80px; }
+    .carousel-header { text-align:center; margin-bottom:44px; }
+    .carousel-outer {
+      position:relative;
+      display:flex; align-items:center; gap:16px;
     }
-    .section-title {
-      font-size: clamp(28px, 4vw, 40px);
-      font-weight: 900; letter-spacing: -1.5px;
-      line-height: 1.1;
-      margin-bottom: 14px;
+    .carousel-track {
+      display:flex; gap:20px;
+      overflow-x:auto; scroll-snap-type:x mandatory;
+      scroll-behavior:smooth; -webkit-overflow-scrolling:touch;
+      padding:24px 0 28px;
+      /* hide scrollbar */
+      scrollbar-width:none; -ms-overflow-style:none;
     }
-    .section-sub {
-      font-size: 17px; color: var(--c-muted);
-      line-height: 1.65; max-width: 500px;
+    .carousel-track::-webkit-scrollbar { display:none; }
+    .carousel-slide {
+      scroll-snap-align:center; flex-shrink:0;
+      display:flex; flex-direction:column; align-items:center; gap:14px;
+      cursor:pointer;
+    }
+    .c-phone {
+      width:185px; position:relative;
+      transition:transform .3s;
+    }
+    .carousel-slide:hover .c-phone { transform:translateY(-6px); }
+    .c-phone::before {
+      content:''; position:absolute; inset:-2px; border-radius:42px;
+      background:linear-gradient(150deg,rgba(168,85,247,.35),rgba(99,102,241,.2));
+      z-index:-1; filter:blur(2px);
+      transition:opacity .3s;
+    }
+    .carousel-slide:hover .c-phone::before { opacity:1.5; }
+    .carousel-slide.active .c-phone::before {
+      background:linear-gradient(150deg,rgba(168,85,247,.6),rgba(99,102,241,.4));
+    }
+    .c-phone img {
+      width:100%; border-radius:40px; display:block;
+      box-shadow:0 20px 56px rgba(0,0,0,.6),0 0 30px rgba(124,58,237,.12);
+    }
+    .c-caption {
+      font-size:13px; font-weight:600; color:var(--c-muted);
+      text-align:center; transition:color .2s;
+    }
+    .carousel-slide:hover .c-caption,
+    .carousel-slide.active .c-caption { color:#c4b5fd; }
+
+    /* Carousel nav buttons */
+    .carousel-btn {
+      flex-shrink:0; width:40px; height:40px; border-radius:50%;
+      background:var(--c-surface); border:1px solid var(--c-border2);
+      color:var(--c-text); font-size:20px; cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      transition:background .2s,border-color .2s,transform .15s;
+      z-index:2; line-height:1;
+    }
+    .carousel-btn:hover { background:var(--c-surface2); border-color:rgba(124,58,237,.4); transform:scale(1.08); }
+    .carousel-btn:disabled { opacity:.3; cursor:not-allowed; transform:none; }
+
+    /* Dots */
+    .carousel-dots {
+      display:flex; justify-content:center; gap:8px; margin-top:4px;
+    }
+    .carousel-dot {
+      width:6px; height:6px; border-radius:50%;
+      background:var(--c-border2); cursor:pointer;
+      transition:background .2s,width .3s,border-radius .3s;
+    }
+    .carousel-dot.active {
+      width:22px; border-radius:3px;
+      background:linear-gradient(90deg,#a855f7,#818cf8);
+    }
+    @media(max-width:600px){
+      .carousel-btn { display:none; }
+      .c-phone { width:160px; }
     }
 
-    /* =============================================
-       FEATURE ROWS  (alternating phone + text)
-    ============================================= */
-    .feature-rows { padding: 0 0 80px; }
+    /* ============================================================
+       FEATURE ROWS
+    ============================================================ */
+    .section-kicker { font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#a78bfa; margin-bottom:10px; }
+    .section-title { font-size:clamp(28px,4vw,40px); font-weight:900; letter-spacing:-1.5px; line-height:1.1; margin-bottom:14px; }
+    .section-sub { font-size:17px; color:var(--c-muted); line-height:1.65; max-width:500px; }
+
+    .feature-rows { padding:0 0 80px; }
     .frow {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      gap: 64px;
-      padding: 56px 0;
-      border-top: 1px solid var(--c-border);
+      display:grid; grid-template-columns:1fr 1fr;
+      align-items:center; gap:64px; padding:56px 0;
+      border-top:1px solid var(--c-border);
     }
-    .frow:first-child { border-top: none; padding-top: 0; }
-    .frow.reverse .frow-visual { order: -1; }
-
-    .frow-text { }
-    .frow-num {
-      font-size: 11px; font-weight: 700; letter-spacing: .12em;
-      text-transform: uppercase; color: #a78bfa;
-      margin-bottom: 12px;
-    }
-    .frow h3 {
-      font-size: clamp(24px, 3.5vw, 36px);
-      font-weight: 900; letter-spacing: -1px;
-      line-height: 1.1;
-      margin-bottom: 14px;
-    }
-    .frow p {
-      font-size: 16px; color: var(--c-muted);
-      line-height: 1.7; margin-bottom: 20px;
-    }
-    .frow-chips {
-      display: flex; flex-wrap: wrap; gap: 8px;
-    }
+    .frow:first-child { border-top:none; padding-top:0; }
+    .frow.reverse .frow-visual { order:-1; }
+    .frow-num { font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#a78bfa; margin-bottom:12px; }
+    .frow h3 { font-size:clamp(24px,3.5vw,36px); font-weight:900; letter-spacing:-1px; line-height:1.1; margin-bottom:14px; }
+    .frow p { font-size:16px; color:var(--c-muted); line-height:1.7; margin-bottom:20px; }
+    .frow-chips { display:flex; flex-wrap:wrap; gap:8px; }
     .chip {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 6px 12px;
-      background: rgba(124,58,237,.1);
-      border: 1px solid rgba(124,58,237,.2);
-      border-radius: 999px;
-      font-size: 13px; font-weight: 500; color: #c4b5fd;
+      display:inline-flex; align-items:center; gap:6px;
+      padding:6px 12px; background:rgba(124,58,237,.1);
+      border:1px solid rgba(124,58,237,.2); border-radius:999px;
+      font-size:13px; font-weight:500; color:#c4b5fd;
     }
-
-    .frow-visual {
-      display: flex; justify-content: center;
-    }
-    .frow-phone {
-      width: 230px;
-      position: relative;
-    }
+    .frow-visual { display:flex; justify-content:center; }
+    .frow-phone { width:230px; position:relative; }
     .frow-phone::before {
-      content: '';
-      position: absolute; inset: -2px;
-      border-radius: 44px;
-      background: linear-gradient(150deg, rgba(168,85,247,.4), rgba(99,102,241,.2));
-      z-index: -1; filter: blur(2px);
+      content:''; position:absolute; inset:-2px; border-radius:44px;
+      background:linear-gradient(150deg,rgba(168,85,247,.4),rgba(99,102,241,.2));
+      z-index:-1; filter:blur(2px);
     }
-    .frow-phone img {
-      width: 100%; border-radius: 42px;
-      box-shadow: 0 24px 64px rgba(0,0,0,.65), 0 0 40px rgba(124,58,237,.15);
-      display: block;
+    .frow-phone img { width:100%; border-radius:42px; box-shadow:0 24px 64px rgba(0,0,0,.65),0 0 40px rgba(124,58,237,.15); display:block; }
+
+    @media(max-width:800px){
+      .frow { grid-template-columns:1fr; gap:32px; text-align:center; padding:40px 0; }
+      .frow:first-child { padding-top:0; }
+      .frow.reverse .frow-visual { order:0; } .frow-visual { order:-1; }
+      .frow-chips { justify-content:center; } .frow-phone { width:185px; } .frow p { font-size:15px; }
+    }
+    @media(max-width:480px){ .frow-phone { width:165px; } .frow h3 { font-size:clamp(22px,6vw,28px); letter-spacing:-.5px; } }
+
+    /* ============================================================
+       ANIMATED ATTENDANCE RING
+    ============================================================ */
+    .ring-section {
+      padding:80px 0;
+      border-top:1px solid var(--c-border);
+      border-bottom:1px solid var(--c-border);
+      margin-bottom:80px;
+    }
+    .ring-inner {
+      display:grid; grid-template-columns:1fr 1fr;
+      align-items:center; gap:64px;
+    }
+    .ring-text .section-sub { max-width:420px; }
+    .ring-highlights { display:flex; flex-direction:column; gap:14px; margin-top:28px; }
+    .ring-highlight {
+      display:flex; align-items:flex-start; gap:12px;
+      background:var(--c-surface); border:1px solid var(--c-border);
+      border-radius:var(--r-lg); padding:16px 18px;
+    }
+    .rh-icon { font-size:20px; flex-shrink:0; margin-top:1px; }
+    .rh-title { font-size:14px; font-weight:700; margin-bottom:2px; }
+    .rh-desc { font-size:13px; color:var(--c-muted); line-height:1.5; }
+
+    .ring-visual {
+      display:flex; justify-content:center; align-items:center;
+      position:relative;
+    }
+    .ring-svg-wrap { position:relative; width:260px; height:260px; }
+    .attendance-ring { width:100%; height:100%; transform:rotate(-90deg); }
+    .ring-bg-circle { fill:none; stroke:rgba(255,255,255,.06); stroke-width:18; }
+    .ring-threshold {
+      fill:none; stroke:rgba(255,180,50,.15); stroke-width:18;
+      stroke-dasharray:none;
+    }
+    .ring-fill-circle {
+      fill:none;
+      stroke:url(#ringGrad);
+      stroke-width:18;
+      stroke-linecap:round;
+      transition:stroke-dashoffset .05s linear;
+    }
+    .ring-center {
+      position:absolute; inset:0;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+    }
+    .ring-pct {
+      font-size:52px; font-weight:900; letter-spacing:-2px; line-height:1;
+      background:linear-gradient(135deg,#c084fc,#818cf8);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    .ring-label { font-size:13px; color:var(--c-muted); font-weight:500; margin-top:4px; }
+    .ring-safe-badge {
+      position:absolute; bottom:-16px; left:50%; transform:translateX(-50%);
+      display:inline-flex; align-items:center; gap:6px;
+      background:rgba(34,197,94,.12); border:1px solid rgba(34,197,94,.25);
+      border-radius:999px; padding:6px 14px;
+      font-size:12px; font-weight:700; color:#4ade80;
+      white-space:nowrap; opacity:0;
+      transition:opacity .4s .2s;
+    }
+    .ring-safe-badge.show { opacity:1; }
+    .threshold-line {
+      font-size:11px; color:rgba(255,180,50,.7); font-weight:600;
+      position:absolute; right:-2px; top:50%;
+      transform:translateY(-50%) rotate(90deg);
+      transform-origin:center;
+      letter-spacing:.05em;
     }
 
     @media(max-width:800px){
-      .frow {
-        grid-template-columns: 1fr;
-        gap: 32px;
-        text-align: center;
-        padding: 40px 0;
-      }
-      .frow:first-child { padding-top: 0; }
-      .frow.reverse .frow-visual { order: 0; }
-      .frow-visual { order: -1; }
-      .frow-chips { justify-content: center; }
-      .frow-phone { width: 185px; }
-      .frow p { font-size: 15px; }
-    }
-    @media(max-width:480px){
-      .frow-phone { width: 165px; }
-      .frow h3 { font-size: clamp(22px, 6vw, 28px); letter-spacing: -.5px; }
+      .ring-inner { grid-template-columns:1fr; gap:40px; text-align:center; }
+      .ring-text .section-sub { max-width:100%; }
+      .ring-highlights { align-items:stretch; }
+      .ring-svg-wrap { width:220px; height:220px; }
+      .ring-pct { font-size:44px; }
     }
 
-    /* =============================================
-       FEATURE GRID (6 cards)
-    ============================================= */
-    .feat-section { padding: 0 0 80px; }
-    .feat-header { text-align: center; margin-bottom: 48px; }
-    .feat-header .section-sub { margin: 0 auto; }
-    .feat-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
+    /* ============================================================
+       FEATURE GRID
+    ============================================================ */
+    .feat-section { padding:0 0 80px; }
+    .feat-header { text-align:center; margin-bottom:48px; }
+    .feat-header .section-sub { margin:0 auto; }
+    .feat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
     .feat-card {
-      background: var(--c-surface);
-      border: 1px solid var(--c-border);
-      border-radius: var(--r-xl);
-      padding: 28px 24px;
-      transition: border-color .25s, background .25s, transform .25s, box-shadow .25s;
-      position: relative; overflow: hidden;
+      background:var(--c-surface); border:1px solid var(--c-border);
+      border-radius:var(--r-xl); padding:28px 24px;
+      transition:border-color .25s,background .25s,transform .25s,box-shadow .25s;
+      position:relative; overflow:hidden;
     }
     .feat-card::after {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(168,85,247,.4), transparent);
-      opacity: 0; transition: opacity .3s;
+      content:''; position:absolute; top:0; left:0; right:0; height:1px;
+      background:linear-gradient(90deg,transparent,rgba(168,85,247,.4),transparent);
+      opacity:0; transition:opacity .3s;
     }
-    .feat-card:hover {
-      border-color: rgba(124,58,237,.3);
-      background: var(--c-surface2);
-      transform: translateY(-4px);
-      box-shadow: 0 20px 50px rgba(0,0,0,.4);
-    }
-    .feat-card:hover::after { opacity: 1; }
-    .feat-icon {
-      font-size: 26px; margin-bottom: 14px; display: block;
-    }
-    .feat-card h4 {
-      font-size: 16px; font-weight: 800; letter-spacing: -.3px;
-      margin-bottom: 8px; color: var(--c-text);
-    }
-    .feat-card p {
-      font-size: 14px; color: var(--c-muted); line-height: 1.6;
-    }
-    @media(max-width:800px){ .feat-grid { grid-template-columns: repeat(2,1fr); gap: 12px; } }
-    @media(max-width:480px){ .feat-grid { grid-template-columns: 1fr; } }
-    @media(max-width:800px){
-      .feat-card { padding: 22px 18px; }
-      .feat-icon { font-size: 22px; margin-bottom: 10px; }
-      .feat-header { margin-bottom: 36px; }
-    }
+    .feat-card:hover { border-color:rgba(124,58,237,.3); background:var(--c-surface2); transform:translateY(-4px); box-shadow:0 20px 50px rgba(0,0,0,.4); }
+    .feat-card:hover::after { opacity:1; }
+    .feat-icon { font-size:26px; margin-bottom:14px; display:block; }
+    .feat-card h4 { font-size:16px; font-weight:800; letter-spacing:-.3px; margin-bottom:8px; }
+    .feat-card p { font-size:14px; color:var(--c-muted); line-height:1.6; }
+    @media(max-width:800px){ .feat-grid { grid-template-columns:repeat(2,1fr); gap:12px; } .feat-card { padding:22px 18px; } .feat-icon { font-size:22px; margin-bottom:10px; } .feat-header { margin-bottom:36px; } }
+    @media(max-width:480px){ .feat-grid { grid-template-columns:1fr; } }
 
-    /* =============================================
+    /* ============================================================
+       FAQ
+    ============================================================ */
+    .faq-section { padding:0 0 80px; }
+    .faq-header { text-align:center; margin-bottom:48px; }
+    .faq-header .section-sub { margin:0 auto; }
+    .faq-list { display:flex; flex-direction:column; gap:10px; max-width:780px; margin:0 auto; }
+    .faq-item {
+      background:var(--c-surface); border:1px solid var(--c-border);
+      border-radius:var(--r-lg); overflow:hidden;
+      transition:border-color .25s;
+    }
+    .faq-item:hover { border-color:rgba(124,58,237,.2); }
+    .faq-item.open { border-color:rgba(124,58,237,.3); }
+    .faq-q {
+      width:100%; display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:18px 22px; background:none; border:none; cursor:pointer;
+      font-size:15px; font-weight:700; color:var(--c-text);
+      text-align:left; line-height:1.4;
+    }
+    .faq-q:hover { color:#c4b5fd; }
+    .faq-icon {
+      flex-shrink:0; width:22px; height:22px; border-radius:50%;
+      background:rgba(124,58,237,.12); border:1px solid rgba(124,58,237,.2);
+      display:flex; align-items:center; justify-content:center;
+      color:#a78bfa; font-size:16px; font-weight:300;
+      transition:transform .3s, background .2s;
+      line-height:1;
+    }
+    .faq-item.open .faq-icon { transform:rotate(45deg); background:rgba(124,58,237,.2); }
+    .faq-a {
+      max-height:0; overflow:hidden;
+      transition:max-height .35s ease, padding .25s ease;
+      font-size:14px; color:var(--c-muted); line-height:1.7;
+    }
+    .faq-item.open .faq-a { max-height:300px; }
+    .faq-a-inner { padding:0 22px 18px; }
+
+    /* ============================================================
        BOTTOM CTA
-    ============================================= */
-    .cta-section {
-      padding: 0 0 80px;
-    }
+    ============================================================ */
+    .cta-section { padding:0 0 80px; }
     .cta-inner {
-      position: relative; overflow: hidden;
-      background: linear-gradient(135deg, rgba(124,58,237,.18) 0%, rgba(99,102,241,.12) 60%, rgba(59,130,246,.1) 100%);
-      border: 1px solid rgba(124,58,237,.22);
-      border-radius: var(--r-xl);
-      padding: 64px 48px;
-      text-align: center;
+      position:relative; overflow:hidden;
+      background:linear-gradient(135deg,rgba(124,58,237,.18) 0%,rgba(99,102,241,.12) 60%,rgba(59,130,246,.1) 100%);
+      border:1px solid rgba(124,58,237,.22); border-radius:var(--r-xl);
+      padding:64px 48px; text-align:center;
     }
-    .cta-inner::before {
-      content: '';
-      position: absolute; top: -60px; right: -60px;
-      width: 300px; height: 300px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(124,58,237,.3), transparent 70%);
-      pointer-events: none;
-    }
-    .cta-inner::after {
-      content: '';
-      position: absolute; bottom: -60px; left: -60px;
-      width: 250px; height: 250px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(59,130,246,.2), transparent 70%);
-      pointer-events: none;
-    }
-    .cta-inner h2 {
-      font-size: clamp(26px, 4vw, 44px);
-      font-weight: 900; letter-spacing: -1.5px;
-      line-height: 1.1; margin-bottom: 16px;
-      position: relative; z-index: 1;
-    }
-    .cta-inner p {
-      font-size: 16px; color: var(--c-muted);
-      line-height: 1.65; max-width: 480px;
-      margin: 0 auto 36px;
-      position: relative; z-index: 1;
-    }
-    .cta-btns {
-      display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;
-      position: relative; z-index: 1;
-    }
-    @media(max-width:540px){
-      .cta-inner { padding: 44px 24px; }
-      .cta-btns { flex-direction: column; align-items: center; }
-      .btn-main, .btn-ghost { width: 100%; max-width: 280px; justify-content: center; }
-    }
+    .cta-inner::before { content:''; position:absolute; top:-60px; right:-60px; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle,rgba(124,58,237,.3),transparent 70%); pointer-events:none; }
+    .cta-inner::after  { content:''; position:absolute; bottom:-60px; left:-60px; width:250px; height:250px; border-radius:50%; background:radial-gradient(circle,rgba(59,130,246,.2),transparent 70%); pointer-events:none; }
+    .cta-inner h2 { font-size:clamp(26px,4vw,44px); font-weight:900; letter-spacing:-1.5px; line-height:1.1; margin-bottom:16px; position:relative; z-index:1; }
+    .cta-inner p { font-size:16px; color:var(--c-muted); line-height:1.65; max-width:480px; margin:0 auto 36px; position:relative; z-index:1; }
+    .cta-btns { display:flex; justify-content:center; gap:12px; flex-wrap:wrap; position:relative; z-index:1; }
+    @media(max-width:540px){ .cta-inner { padding:44px 24px; } .cta-btns { flex-direction:column; align-items:center; } .btn-main,.btn-ghost { width:100%; max-width:280px; justify-content:center; } }
 
-    /* =============================================
+    /* ============================================================
        LEGAL
-    ============================================= */
-    .legal-section { padding: 0 0 64px; }
-    .legal-grid {
-      display: grid;
-      grid-template-columns: repeat(3,1fr);
-      gap: 14px;
-    }
-    .legal-card {
-      background: var(--c-surface);
-      border: 1px solid var(--c-border);
-      border-radius: var(--r-lg);
-      padding: 22px 24px;
-    }
-    .legal-card h2 {
-      font-size: 14px; font-weight: 700;
-      color: #c7d2fe; margin-bottom: 10px;
-      display: flex; align-items: center; gap: 6px;
-    }
-    .legal-card p {
-      font-size: 13px; color: var(--c-muted);
-      line-height: 1.65; margin-bottom: 4px;
-    }
-    .legal-card a { color: #818cf8; text-decoration: none; }
-    .legal-card a:hover { text-decoration: underline; }
-    @media(max-width:700px){ .legal-grid { grid-template-columns: 1fr; } }
+    ============================================================ */
+    .legal-section { padding:0 0 64px; }
+    .legal-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+    .legal-card { background:var(--c-surface); border:1px solid var(--c-border); border-radius:var(--r-lg); padding:22px 24px; }
+    .legal-card h2 { font-size:14px; font-weight:700; color:#c7d2fe; margin-bottom:10px; display:flex; align-items:center; gap:6px; }
+    .legal-card p { font-size:13px; color:var(--c-muted); line-height:1.65; margin-bottom:4px; }
+    .legal-card p:last-child { margin-bottom:0; }
+    .legal-card a { color:#818cf8; text-decoration:none; }
+    .legal-card a:hover { text-decoration:underline; }
+    @media(max-width:700px){ .legal-grid { grid-template-columns:1fr; } }
 
-    /* =============================================
+    /* ============================================================
        FOOTER
-    ============================================= */
-    footer {
-      border-top: 1px solid var(--c-border);
-      padding: 36px 0 40px;
-    }
-    .footer-inner {
-      display: flex; flex-direction: column;
-      align-items: center; gap: 20px;
-      text-align: center;
-    }
-    .footer-brand {
-      display: flex; align-items: center; gap: 10px;
-    }
-    .footer-brand img {
-      width: 28px; height: 28px; border-radius: 7px; opacity: .8;
-    }
-    .footer-brand span {
-      font-size: 15px; font-weight: 800;
-      background: linear-gradient(90deg,#c4b5fd,#818cf8);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
-    .footer-links {
-      display: flex; flex-wrap: wrap; gap: 6px 20px; justify-content: center;
-    }
-    .footer-links a {
-      font-size: 13px; color: var(--c-subtle);
-      text-decoration: none; transition: color .2s;
-    }
-    .footer-links a:hover { color: #818cf8; }
+    ============================================================ */
+    footer { border-top:1px solid var(--c-border); padding:36px 0 40px; }
+    .footer-inner { display:flex; flex-direction:column; align-items:center; gap:20px; text-align:center; }
+    .footer-brand { display:flex; align-items:center; gap:10px; }
+    .footer-brand img { width:28px; height:28px; border-radius:7px; opacity:.8; }
+    .footer-brand span { font-size:15px; font-weight:800; background:linear-gradient(90deg,#c4b5fd,#818cf8); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .footer-links { display:flex; flex-wrap:wrap; gap:6px 20px; justify-content:center; }
+    .footer-links a { font-size:13px; color:var(--c-subtle); text-decoration:none; transition:color .2s; }
+    .footer-links a:hover { color:#818cf8; }
+    .footer-badges { display:flex; align-items:center; gap:16px; flex-wrap:wrap; justify-content:center; }
+    .footer-badge-link { display:inline-flex; border-radius:8px; overflow:hidden; transition:transform .2s,filter .2s; filter:drop-shadow(0 2px 8px rgba(124,58,237,.2)); opacity:.75; }
+    .footer-badge-link:hover { transform:translateY(-2px); opacity:1; }
+    .footer-badge-link img { display:block; }
+    .footer-copy { font-size:12px; color:var(--c-subtle); }
 
-    /* footer badges */
-    .footer-badges {
-      display: flex; align-items: center;
-      gap: 16px; flex-wrap: wrap; justify-content: center;
-    }
-    .footer-badge-link {
-      display: inline-flex;
-      border-radius: 8px;
-      overflow: hidden;
-      transition: transform .2s, filter .2s;
-      filter: drop-shadow(0 2px 8px rgba(124,58,237,.2));
-      opacity: .75;
-    }
-    .footer-badge-link:hover { transform: translateY(-2px); opacity: 1; }
-    .footer-badge-link img { display: block; }
-
-    .footer-copy {
-      font-size: 12px; color: var(--c-subtle);
-    }
-
-    /* =============================================
+    /* ============================================================
        SCROLL ANIMATIONS
-    ============================================= */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .reveal { opacity: 0; transform: translateY(32px); transition: opacity .6s ease, transform .6s ease; }
-    .reveal.in  { opacity: 1; transform: translateY(0); }
-    .reveal-delay-1 { transition-delay: .08s; }
-    .reveal-delay-2 { transition-delay: .16s; }
-    .reveal-delay-3 { transition-delay: .24s; }
-    .reveal-delay-4 { transition-delay: .32s; }
-    .reveal-delay-5 { transition-delay: .40s; }
-    .reveal-delay-6 { transition-delay: .48s; }
+    ============================================================ */
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+    .reveal { opacity:0; transform:translateY(32px); transition:opacity .6s ease,transform .6s ease; }
+    .reveal.in  { opacity:1; transform:translateY(0); }
+    .reveal-d1 { transition-delay:.08s; } .reveal-d2 { transition-delay:.16s; }
+    .reveal-d3 { transition-delay:.24s; } .reveal-d4 { transition-delay:.32s; }
+    .reveal-d5 { transition-delay:.40s; } .reveal-d6 { transition-delay:.48s; }
   </style>
 </head>
 <body>
@@ -700,19 +637,14 @@
 <!-- ══════════ NAV ══════════ -->
 <header>
   <nav>
-    <a href="#" class="nav-brand" aria-label="Attenly">
+    <a href="#" class="nav-brand" aria-label="Attenly home">
       <img src="logo.png" alt="Attenly logo"/>
       <span>Attenly</span>
     </a>
     <div class="nav-right">
-      <a href="#features" class="nav-link">Features</a>
-      <a href="#privacy" class="nav-link">Privacy</a>
-      <a
-        href="https://play.google.com/store/apps/details?id=com.paulbaruah.attenly&pcampaignid=web_share"
-        class="nav-btn"
-        target="_blank" rel="noopener noreferrer"
-        id="nav-download"
-      >
+      <a href="#screenshots" class="nav-link">Screenshots</a>
+      <a href="#faq" class="nav-link">FAQ</a>
+      <a href="https://play.google.com/store/apps/details?id=com.paulbaruah.attenly&pcampaignid=web_share" class="nav-btn" target="_blank" rel="noopener noreferrer" id="nav-download">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 20.5v-17c0-.83 1-.83 1.5-.5l15 8.5c.45.26.45.74 0 1L6.5 21C6 21.33 5 21.33 5 20.5z"/></svg>
         Download
       </a>
@@ -720,11 +652,11 @@
   </nav>
 </header>
 
-<!-- ══════════ HERO ══════════ -->
 <main>
+
+<!-- ══════════ HERO ══════════ -->
 <section class="wrap">
   <div class="hero">
-    <!-- Text -->
     <div class="hero-text">
       <div class="hero-eyebrow">
         <span class="eyebrow-dot"></span>
@@ -735,50 +667,56 @@
         Attenly tracks your attendance per subject, tells you exactly how many classes you can skip, and keeps your entire academic schedule in one clean app.
       </p>
       <div class="hero-cta">
-        <a
-          href="https://play.google.com/store/apps/details?id=com.paulbaruah.attenly&pcampaignid=web_share"
-          class="btn-main"
-          target="_blank" rel="noopener noreferrer"
-          id="hero-download"
-        >
+        <a href="https://play.google.com/store/apps/details?id=com.paulbaruah.attenly&pcampaignid=web_share" class="btn-main" target="_blank" rel="noopener noreferrer" id="hero-download">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 20.5v-17c0-.83 1-.83 1.5-.5l15 8.5c.45.26.45.74 0 1L6.5 21C6 21.33 5 21.33 5 20.5z"/></svg>
           Get it on Play Store
         </a>
-        <a href="#features" class="btn-ghost" id="hero-features">
-          See features
+        <a href="#screenshots" class="btn-ghost" id="hero-screenshots">
+          See screenshots
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>
     </div>
 
-    <!-- Hero phone -->
     <div class="hero-visual">
-      <!-- phone-showcase is a sized container; badges are positioned
-           relative to IT so they never escape the viewport -->
       <div class="phone-showcase">
-        <!-- Left floating badge -->
         <div class="hero-float-badge hfb-1" aria-hidden="true">
           <span class="hfb-icon">⚡</span>
-          <div>
-            <div class="hfb-title">Safe to skip</div>
-            <div class="hfb-label">2 classes left</div>
-          </div>
+          <div><div class="hfb-title">Safe to skip</div><div class="hfb-label">2 classes left</div></div>
         </div>
-
-        <!-- The phone itself -->
         <div class="phone-frame">
-          <img src="screenshots/image1.png" alt="Attenly home dashboard showing overall attendance and weekly schedule" loading="eager"/>
+          <img src="screenshots/image1.png" alt="Attenly home dashboard" loading="eager"/>
         </div>
-
-        <!-- Right floating badge -->
         <div class="hero-float-badge hfb-2" aria-hidden="true">
           <span class="hfb-icon">✅</span>
-          <div>
-            <div class="hfb-title">100% in Maths</div>
-            <div class="hfb-label">On track</div>
-          </div>
+          <div><div class="hfb-title">100% in Maths</div><div class="hfb-label">On track</div></div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ LIVE STATS ══════════ -->
+<section class="stats-section wrap" aria-label="App statistics">
+  <div class="stats-grid reveal">
+    <div class="stat-item">
+      <div class="live-badge"><span class="live-dot"></span>Live</div>
+      <div class="stat-val" id="stat-rating"><div class="stat-skeleton"></div></div>
+      <div class="stat-label">Play Store Rating</div>
+    </div>
+    <div class="stat-item">
+      <div class="live-badge"><span class="live-dot"></span>Live</div>
+      <div class="stat-val" id="stat-downloads"><div class="stat-skeleton"></div></div>
+      <div class="stat-label">Downloads</div>
+    </div>
+    <div class="stat-item">
+      <div class="live-badge"><span class="live-dot"></span>Live</div>
+      <div class="stat-val" id="stat-reviews"><div class="stat-skeleton"></div></div>
+      <div class="stat-label">Reviews</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val" id="stat-privacy" style="font-size:22px;">🔒 On-Device</div>
+      <div class="stat-label">Zero data collected</div>
     </div>
   </div>
 </section>
@@ -789,65 +727,75 @@
     <div class="proof-text">
       <div class="proof-kicker">Community Recognition</div>
       <div class="proof-headline">Loved by students,<br/>recognized by the community.</div>
-      <p class="proof-desc">
-        Attenly has been featured and reviewed across multiple product discovery platforms — by real students who use it every semester.
-      </p>
+      <p class="proof-desc">Attenly has been featured and reviewed across product discovery platforms — by real students who use it every semester.</p>
     </div>
-
     <div class="proof-divider" aria-hidden="true"></div>
-
     <div class="proof-badges">
       <div class="proof-badge-wrap">
         <span class="proof-badge-label">Featured on</span>
-        <a
-          class="proof-badge-link"
-          href="https://www.shipit.buzz/products/attenly?ref=badge"
-          target="_blank" rel="noopener noreferrer"
-          id="shipit-main"
-          aria-label="Featured on ShipIt"
-        >
-          <img
-            src="https://www.shipit.buzz/api/products/attenly/badge?theme=light"
-            alt="Featured on Shipit"
-            height="40"
-            loading="lazy"
-          />
+        <a class="proof-badge-link" href="https://www.shipit.buzz/products/attenly?ref=badge" target="_blank" rel="noopener noreferrer" id="shipit-main" aria-label="Featured on ShipIt">
+          <img src="https://www.shipit.buzz/api/products/attenly/badge?theme=light" alt="Featured on Shipit" height="40" loading="lazy"/>
         </a>
       </div>
-
       <div class="proof-divider" aria-hidden="true"></div>
-
       <div class="proof-badge-wrap">
         <span class="proof-badge-label">Review us on</span>
-        <a
-          class="proof-badge-link"
-          href="https://www.producthunt.com/products/attenly/reviews/new?utm_source=badge-product_review&utm_medium=badge&utm_source=badge-attenly"
-          target="_blank" rel="noopener noreferrer"
-          id="ph-main"
-          aria-label="Review Attenly on Product Hunt"
-        >
-          <img
-            src="https://api.producthunt.com/widgets/embed-image/v1/product_review.svg?product_id=1243517&theme=light"
-            alt="Attenly — College attendance tracker with safe-skip planning | Product Hunt"
-            width="220" height="48"
-            loading="lazy"
-            style="width:220px;height:48px;"
-          />
+        <a class="proof-badge-link" href="https://www.producthunt.com/products/attenly/reviews/new?utm_source=badge-product_review&utm_medium=badge&utm_source=badge-attenly" target="_blank" rel="noopener noreferrer" id="ph-main" aria-label="Review Attenly on Product Hunt">
+          <img src="https://api.producthunt.com/widgets/embed-image/v1/product_review.svg?product_id=1243517&theme=light" alt="Attenly on Product Hunt" width="220" height="48" loading="lazy" style="width:220px;height:48px;"/>
         </a>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ══════════ SCREENSHOT CAROUSEL ══════════ -->
+<section class="carousel-section wrap" id="screenshots">
+  <div class="carousel-header reveal">
+    <div class="section-kicker">App Screenshots</div>
+    <h2 class="section-title">See it in action</h2>
+    <p class="section-sub" style="margin:0 auto;">Every screen, exactly as it looks on your phone.</p>
+  </div>
+
+  <div class="carousel-outer reveal">
+    <button class="carousel-btn" id="carousel-prev" aria-label="Previous screenshot">&#8249;</button>
+    <div class="carousel-track" id="carousel-track" role="list">
+      <div class="carousel-slide active" role="listitem">
+        <div class="c-phone"><img src="screenshots/image1.png" alt="Dashboard — overall attendance overview" loading="lazy"/></div>
+        <span class="c-caption">Dashboard</span>
+      </div>
+      <div class="carousel-slide" role="listitem">
+        <div class="c-phone"><img src="screenshots/image2.png" alt="Attendance tracking with safe-skip indicator" loading="lazy"/></div>
+        <span class="c-caption">Attendance Tracking</span>
+      </div>
+      <div class="carousel-slide" role="listitem">
+        <div class="c-phone"><img src="screenshots/image3.png" alt="Visual weekly timetable calendar view" loading="lazy"/></div>
+        <span class="c-caption">Visual Timetable</span>
+      </div>
+      <div class="carousel-slide" role="listitem">
+        <div class="c-phone"><img src="screenshots/image4.png" alt="Assignment deadlines tracker" loading="lazy"/></div>
+        <span class="c-caption">Assignments</span>
+      </div>
+      <div class="carousel-slide" role="listitem">
+        <div class="c-phone"><img src="screenshots/image5.png" alt="Share timetable with friends" loading="lazy"/></div>
+        <span class="c-caption">Share Timetable</span>
+      </div>
+      <div class="carousel-slide" role="listitem">
+        <div class="c-phone"><img src="screenshots/image6.png" alt="Weekly schedule at a glance" loading="lazy"/></div>
+        <span class="c-caption">Week at a Glance</span>
+      </div>
+    </div>
+    <button class="carousel-btn" id="carousel-next" aria-label="Next screenshot">&#8250;</button>
+  </div>
+  <div class="carousel-dots" id="carousel-dots" role="tablist" aria-label="Screenshot navigation"></div>
+</section>
+
 <!-- ══════════ FEATURE ROWS ══════════ -->
 <section class="feature-rows wrap" id="features">
-
-  <!-- Row 1: Attendance -->
   <div class="frow reveal">
     <div class="frow-text">
       <div class="frow-num">Feature 01</div>
       <h3>Smart Attendance<br/>Tracking</h3>
-      <p>Log each class as present, absent, or skipped with a single tap. Attenly instantly shows your live attendance percentage — broken down by subject — so you're never caught off guard before an exam.</p>
+      <p>Log each class as present, absent, or skipped with a single tap. See your live attendance percentage broken down by subject — so you're never caught off guard.</p>
       <div class="frow-chips">
         <span class="chip">📊 Per-subject %</span>
         <span class="chip">📅 Weekly view</span>
@@ -855,13 +803,10 @@
       </div>
     </div>
     <div class="frow-visual">
-      <div class="frow-phone">
-        <img src="screenshots/image2.png" alt="Attenly attendance tracking screen showing safe-skip indicator"/>
-      </div>
+      <div class="frow-phone"><img src="screenshots/image2.png" alt="Attendance tracking screen"/></div>
     </div>
   </div>
 
-  <!-- Row 2: Timetable -->
   <div class="frow reverse reveal">
     <div class="frow-text">
       <div class="frow-num">Feature 02</div>
@@ -874,13 +819,10 @@
       </div>
     </div>
     <div class="frow-visual">
-      <div class="frow-phone">
-        <img src="screenshots/image3.png" alt="Attenly timetable calendar view with coloured subjects"/>
-      </div>
+      <div class="frow-phone"><img src="screenshots/image3.png" alt="Timetable calendar view"/></div>
     </div>
   </div>
 
-  <!-- Row 3: Assignments -->
   <div class="frow reveal">
     <div class="frow-text">
       <div class="frow-num">Feature 03</div>
@@ -893,18 +835,15 @@
       </div>
     </div>
     <div class="frow-visual">
-      <div class="frow-phone">
-        <img src="screenshots/image4.png" alt="Attenly assignments tracker showing deadline countdown"/>
-      </div>
+      <div class="frow-phone"><img src="screenshots/image4.png" alt="Assignments tracker"/></div>
     </div>
   </div>
 
-  <!-- Row 4: Share timetable -->
   <div class="frow reverse reveal">
     <div class="frow-text">
       <div class="frow-num">Feature 04</div>
       <h3>Share Your Schedule<br/>with Friends</h3>
-      <p>Export and share your timetable as a JSON file in seconds. Only class timings and subjects are shared — your attendance, assignments, and personal data always stay private on your device.</p>
+      <p>Export and share your timetable as a JSON file in seconds. Only class timings and subjects are shared — your attendance, assignments, and personal data always stay private.</p>
       <div class="frow-chips">
         <span class="chip">🔗 One-tap share</span>
         <span class="chip">🔒 Privacy first</span>
@@ -912,13 +851,79 @@
       </div>
     </div>
     <div class="frow-visual">
-      <div class="frow-phone">
-        <img src="screenshots/image5.png" alt="Attenly timetable sharing feature"/>
+      <div class="frow-phone"><img src="screenshots/image5.png" alt="Timetable sharing feature"/></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ ATTENDANCE RING ══════════ -->
+<div class="ring-section">
+  <div class="wrap">
+    <div class="ring-inner">
+      <div class="ring-text reveal">
+        <div class="section-kicker">Safe-Skip Logic</div>
+        <h2 class="section-title">Know your exact safe zone — always.</h2>
+        <p class="section-sub">Attenly calculates your attendance per subject and tells you precisely how many classes you can skip without falling below the required threshold.</p>
+        <div class="ring-highlights">
+          <div class="ring-highlight">
+            <span class="rh-icon">📊</span>
+            <div>
+              <div class="rh-title">Live percentage tracking</div>
+              <div class="rh-desc">Updates instantly when you mark present or absent — no manual maths needed.</div>
+            </div>
+          </div>
+          <div class="ring-highlight">
+            <span class="rh-icon">⚡</span>
+            <div>
+              <div class="rh-title">Classes-left calculator</div>
+              <div class="rh-desc">Tells you exactly how many more classes you can skip while staying safe.</div>
+            </div>
+          </div>
+          <div class="ring-highlight">
+            <span class="rh-icon">🎯</span>
+            <div>
+              <div class="rh-title">Threshold awareness</div>
+              <div class="rh-desc">Visual alerts when you're approaching the 75% minimum so you never get a shock.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ring-visual reveal">
+        <div class="ring-svg-wrap" id="ring-wrap">
+          <svg class="attendance-ring" viewBox="0 0 200 200" aria-label="Attendance ring showing 78%">
+            <defs>
+              <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#a855f7"/>
+                <stop offset="100%" stop-color="#6366f1"/>
+              </linearGradient>
+            </defs>
+            <!-- Background track -->
+            <circle class="ring-bg-circle" cx="100" cy="100" r="80"/>
+            <!-- 75% threshold marker (dashed) -->
+            <circle cx="100" cy="100" r="80" fill="none"
+              stroke="rgba(255,180,50,0.22)" stroke-width="18"
+              stroke-dasharray="3 7"
+              stroke-dashoffset="0"
+              style="transform-origin:center"/>
+            <!-- Animated fill -->
+            <circle class="ring-fill-circle" cx="100" cy="100" r="80"
+              id="ring-circle"
+              stroke-dasharray="502.65"
+              stroke-dashoffset="502.65"/>
+          </svg>
+          <div class="ring-center">
+            <span class="ring-pct" id="ring-pct">0%</span>
+            <span class="ring-label">Attendance</span>
+          </div>
+          <div class="ring-safe-badge" id="ring-safe-badge">
+            ✓ Safe — can skip 1 more
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
-</section>
+</div>
 
 <!-- ══════════ FEATURE GRID ══════════ -->
 <section class="feat-section wrap">
@@ -927,38 +932,81 @@
     <h2 class="section-title">Everything in one app.</h2>
     <p class="section-sub">No duct-tape integrations. No five separate apps. Just one clean, fast tool built around how students actually study.</p>
   </div>
-
   <div class="feat-grid">
-    <div class="feat-card reveal reveal-delay-1">
-      <span class="feat-icon">⚡</span>
-      <h4>Safe-to-Skip Logic</h4>
-      <p>Calculates exactly how many classes you can skip per subject without crossing the attendance threshold.</p>
+    <div class="feat-card reveal reveal-d1"><span class="feat-icon">⚡</span><h4>Safe-to-Skip Logic</h4><p>Calculates exactly how many classes you can skip per subject without crossing the attendance threshold.</p></div>
+    <div class="feat-card reveal reveal-d2"><span class="feat-icon">📱</span><h4>Fully On-Device</h4><p>No account required. No cloud sync. All your data lives on your phone — fast, private, and always available offline.</p></div>
+    <div class="feat-card reveal reveal-d3"><span class="feat-icon">🎨</span><h4>Beautiful Dark UI</h4><p>A polished, dark-mode interface that's easy on the eyes during late-night study sessions and early-morning classes.</p></div>
+    <div class="feat-card reveal reveal-d4"><span class="feat-icon">📊</span><h4>Attendance Insights</h4><p>Visual progress rings and per-subject breakdowns show exactly where you stand in every course — at a glance.</p></div>
+    <div class="feat-card reveal reveal-d5"><span class="feat-icon">🗓️</span><h4>Weekly Overview</h4><p>See today's classes, this week's schedule, and upcoming assignments all from a single home screen.</p></div>
+    <div class="feat-card reveal reveal-d6"><span class="feat-icon">🚀</span><h4>Fast & Lightweight</h4><p>Attenly launches instantly and stays out of your way. No bloat, no onboarding hoops, no unnecessary permissions.</p></div>
+  </div>
+</section>
+
+<!-- ══════════ FAQ ══════════ -->
+<section class="faq-section wrap" id="faq">
+  <div class="faq-header reveal">
+    <div class="section-kicker">FAQ</div>
+    <h2 class="section-title">Questions? We got you.</h2>
+    <p class="section-sub">Everything students ask before downloading.</p>
+  </div>
+  <div class="faq-list" role="list">
+
+    <div class="faq-item reveal" role="listitem">
+      <button class="faq-q" aria-expanded="false">
+        Does Attenly need an account or internet connection?
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-a" role="region"><div class="faq-a-inner">No account, no login, no internet required. Attenly is fully offline and stores everything locally on your device. Your data belongs to you.</div></div>
     </div>
-    <div class="feat-card reveal reveal-delay-2">
-      <span class="feat-icon">📱</span>
-      <h4>Fully On-Device</h4>
-      <p>No account required. No cloud sync. All your data lives on your phone — fast, private, and always available offline.</p>
+
+    <div class="faq-item reveal reveal-d1" role="listitem">
+      <button class="faq-q" aria-expanded="false">
+        How does the safe-to-skip feature work?
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-a" role="region"><div class="faq-a-inner">You set your minimum attendance threshold (typically 75%). Attenly tracks your current attendance per subject and calculates how many classes you can still miss without falling below that threshold. It updates live every time you mark a class.</div></div>
     </div>
-    <div class="feat-card reveal reveal-delay-3">
-      <span class="feat-icon">🎨</span>
-      <h4>Beautiful Dark UI</h4>
-      <p>A polished, dark-mode interface that's easy on the eyes during late-night study sessions and early-morning classes.</p>
+
+    <div class="faq-item reveal reveal-d2" role="listitem">
+      <button class="faq-q" aria-expanded="false">
+        Is Attenly completely free?
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-a" role="region"><div class="faq-a-inner">Attenly has a free version with all the core attendance, timetable, and assignment features you need. A Pro version is also available with additional features and a different app icon.</div></div>
     </div>
-    <div class="feat-card reveal reveal-delay-4">
-      <span class="feat-icon">📊</span>
-      <h4>Attendance Insights</h4>
-      <p>Visual progress rings and per-subject breakdowns show exactly where you stand in every course — at a glance.</p>
+
+    <div class="faq-item reveal reveal-d3" role="listitem">
+      <button class="faq-q" aria-expanded="false">
+        Is my data private and secure?
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-a" role="region"><div class="faq-a-inner">Completely. Attenly does not collect, transmit, or store any data on external servers. Your attendance records, timetable, and assignments never leave your phone unless you manually export them using the Share feature.</div></div>
     </div>
-    <div class="feat-card reveal reveal-delay-5">
-      <span class="feat-icon">🗓️</span>
-      <h4>Weekly Overview</h4>
-      <p>See today's classes, this week's schedule, and upcoming assignments all from a single home screen.</p>
+
+    <div class="faq-item reveal reveal-d4" role="listitem">
+      <button class="faq-q" aria-expanded="false">
+        Can I share my timetable with friends?
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-a" role="region"><div class="faq-a-inner">Yes! You can export your timetable as a JSON file and share it with classmates. Only class names, rooms, timings, and days are exported — your attendance data and assignments are never included in the shared file.</div></div>
     </div>
-    <div class="feat-card reveal reveal-delay-6">
-      <span class="feat-icon">🚀</span>
-      <h4>Fast & Lightweight</h4>
-      <p>Attenly launches instantly and stays out of your way. No bloat, no onboarding hoops, no unnecessary permissions.</p>
+
+    <div class="faq-item reveal reveal-d5" role="listitem">
+      <button class="faq-q" aria-expanded="false">
+        What's the minimum attendance threshold I can set?
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-a" role="region"><div class="faq-a-inner">You can set your own threshold per subject. Most colleges require 75%, which is the default, but you can customise it per subject if different courses have different requirements.</div></div>
     </div>
+
+    <div class="faq-item reveal reveal-d6" role="listitem">
+      <button class="faq-q" aria-expanded="false">
+        Does it work on all Android phones?
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-a" role="region"><div class="faq-a-inner">Attenly is available on Google Play and works on Android devices. It's designed to be lightweight so it runs smoothly even on older or budget Android phones.</div></div>
+    </div>
+
   </div>
 </section>
 
@@ -966,23 +1014,13 @@
 <section class="cta-section wrap">
   <div class="cta-inner reveal">
     <h2>Ready to take control<br/>of your semester?</h2>
-    <p>Join students who use Attenly to stay on top of attendance, assignments, and their weekly schedule — without the stress.</p>
+    <p>Join students already using Attenly to stay on top of attendance, assignments, and their weekly schedule — without the stress.</p>
     <div class="cta-btns">
-      <a
-        href="https://play.google.com/store/apps/details?id=com.paulbaruah.attenly&pcampaignid=web_share"
-        class="btn-main"
-        target="_blank" rel="noopener noreferrer"
-        id="cta-download"
-      >
+      <a href="https://play.google.com/store/apps/details?id=com.paulbaruah.attenly&pcampaignid=web_share" class="btn-main" target="_blank" rel="noopener noreferrer" id="cta-download">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 20.5v-17c0-.83 1-.83 1.5-.5l15 8.5c.45.26.45.74 0 1L6.5 21C6 21.33 5 21.33 5 20.5z"/></svg>
         Download on Google Play
       </a>
-      <a
-        href="https://www.producthunt.com/products/attenly/reviews/new?utm_source=badge-product_review&utm_medium=badge&utm_source=badge-attenly"
-        class="btn-ghost"
-        target="_blank" rel="noopener noreferrer"
-        id="cta-review"
-      >
+      <a href="https://www.producthunt.com/products/attenly/reviews/new?utm_source=badge-product_review&utm_medium=badge&utm_source=badge-attenly" class="btn-ghost" target="_blank" rel="noopener noreferrer" id="cta-review">
         ⭐ Leave a review
       </a>
     </div>
@@ -992,22 +1030,23 @@
 <!-- ══════════ LEGAL ══════════ -->
 <section class="legal-section wrap">
   <div class="legal-grid">
-    <div class="legal-card reveal reveal-delay-1" id="privacy">
+    <div class="legal-card reveal reveal-d1" id="privacy">
       <h2>🛡️ Privacy Policy</h2>
       <p>Attenly does not collect or store user data on external servers. All data stays on your device unless you manually export it.</p>
       <p>No data is sold or shared with third parties.</p>
     </div>
-    <div class="legal-card reveal reveal-delay-2" id="terms">
+    <div class="legal-card reveal reveal-d2" id="terms">
       <h2>📄 Terms of Use</h2>
       <p>Attenly is provided as-is without warranties. Attendance predictions are for guidance only.</p>
       <p>Users are responsible for how they use the app.</p>
     </div>
-    <div class="legal-card reveal reveal-delay-3" id="contact">
+    <div class="legal-card reveal reveal-d3" id="contact">
       <h2>✉️ Contact</h2>
-      <p>Email: <a href="mailto:attenly.support@example.com">attenly.support@example.com</a></p>
+      <p>Email: <a href="mailto:attenly.support@gmail.com">attenly.support@gmail.com</a></p>
     </div>
   </div>
 </section>
+
 </main>
 
 <!-- ══════════ FOOTER ══════════ -->
@@ -1018,58 +1057,265 @@
         <img src="logo.png" alt="Attenly"/>
         <span>Attenly</span>
       </div>
-
       <div class="footer-links">
         <a href="#privacy">Privacy</a>
         <a href="#terms">Terms</a>
+        <a href="#faq">FAQ</a>
         <a href="#contact">Contact</a>
         <a href="/app-ads.txt" target="_blank" rel="noopener noreferrer">app-ads.txt</a>
         <a href="https://play.google.com/store/apps/details?id=com.paulbaruah.attenly&pcampaignid=web_share" target="_blank" rel="noopener noreferrer">Play Store</a>
       </div>
-
-      <!-- Footer badges: light theme, subtle treatment -->
       <div class="footer-badges">
-        <a
-          class="footer-badge-link"
-          href="https://www.shipit.buzz/products/attenly?ref=badge"
-          target="_blank" rel="noopener noreferrer"
-          aria-label="Featured on ShipIt"
-        >
+        <a class="footer-badge-link" href="https://www.shipit.buzz/products/attenly?ref=badge" target="_blank" rel="noopener noreferrer" aria-label="Featured on ShipIt">
           <img src="https://www.shipit.buzz/api/products/attenly/badge?theme=light" alt="Featured on Shipit" height="32" loading="lazy"/>
         </a>
-        <a
-          class="footer-badge-link"
-          href="https://www.producthunt.com/products/attenly/reviews/new?utm_source=badge-product_review&utm_medium=badge&utm_source=badge-attenly"
-          target="_blank" rel="noopener noreferrer"
-          aria-label="Attenly on Product Hunt"
-        >
-          <img
-            src="https://api.producthunt.com/widgets/embed-image/v1/product_review.svg?product_id=1243517&theme=light"
-            alt="Attenly on Product Hunt"
-            width="170" height="37"
-            loading="lazy"
-            style="width:170px;height:37px;"
-          />
+        <a class="footer-badge-link" href="https://www.producthunt.com/products/attenly/reviews/new?utm_source=badge-product_review&utm_medium=badge&utm_source=badge-attenly" target="_blank" rel="noopener noreferrer" aria-label="Attenly on Product Hunt">
+          <img src="https://api.producthunt.com/widgets/embed-image/v1/product_review.svg?product_id=1243517&theme=light" alt="Attenly on Product Hunt" width="170" height="37" loading="lazy" style="width:170px;height:37px;border-radius:6px;"/>
         </a>
       </div>
-
       <p class="footer-copy">© 2026 Attenly. All rights reserved.</p>
     </div>
   </div>
 </footer>
 
 <script>
-  // Intersection Observer for reveal animations
-  const reveals = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('in');
-        io.unobserve(e.target);
+/* ============================================================
+   1. SCROLL REVEAL
+============================================================ */
+(function(){
+  const els = document.querySelectorAll('.reveal');
+  if (!window.IntersectionObserver) { els.forEach(e=>e.classList.add('in')); return; }
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});
+  }, {threshold:0.1});
+  els.forEach(e=>io.observe(e));
+})();
+
+/* ============================================================
+   2. COUNTER ANIMATION (stats that are static)
+============================================================ */
+function animateCount(el, target, suffix, duration) {
+  const start = performance.now();
+  function step(now) {
+    const p = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(eased * target) + suffix;
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+/* ============================================================
+   3. PLAY STORE LIVE STATS
+   Attempts to scrape via CORS proxy; falls back gracefully.
+============================================================ */
+(async function loadPlayStoreStats(){
+  const PACKAGE = 'com.paulbaruah.attenly';
+  const ratingEl   = document.getElementById('stat-rating');
+  const dlEl       = document.getElementById('stat-downloads');
+  const reviewsEl  = document.getElementById('stat-reviews');
+
+  // Helper: replace skeleton with value
+  function setVal(el, html) {
+    el.style.setProperty('-webkit-text-fill-color','');
+    el.innerHTML = html;
+  }
+  function setLink(el, text) {
+    el.style.cssText = 'font-size:13px; background:none; -webkit-text-fill-color:rgba(241,240,255,0.55);';
+    el.innerHTML = `<a href="https://play.google.com/store/apps/details?id=${PACKAGE}" target="_blank" rel="noopener noreferrer" style="color:#818cf8;text-decoration:none;">See on Play Store →</a>`;
+  }
+
+  try {
+    const url = `https://play.google.com/store/apps/details?id=${PACKAGE}&hl=en&gl=IN`;
+    const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+
+    const controller = new AbortController();
+    const timer = setTimeout(()=>controller.abort(), 8000);
+
+    const res = await fetch(proxy, { signal: controller.signal });
+    clearTimeout(timer);
+    if (!res.ok) throw new Error('proxy error');
+
+    const data = await res.json();
+    const html = data.contents || '';
+
+    /* --- Rating from JSON-LD aggregateRating --- */
+    const ratingM = html.match(/"ratingValue"\s*:\s*"?([\d.]+)"?/);
+    /* --- Review count --- */
+    const reviewM = html.match(/"ratingCount"\s*:\s*"?([\d,]+)"?/);
+    /* --- Installs: Play Store embeds as e.g. "1,000+" in specific patterns --- */
+    const installM = html.match(/(\d[\d,.]*[KMB+]+)\s*downloads/i)
+                  || html.match(/"numDownloads"\s*:\s*"([^"]+)"/)
+                  || html.match(/Downloads<\/div>[^>]*>([^<]+)</);
+
+    if (ratingM) {
+      const r = parseFloat(ratingM[1]).toFixed(1);
+      setVal(ratingEl, `⭐ ${r}`);
+    } else {
+      setLink(ratingEl);
+    }
+
+    if (reviewM) {
+      const n = parseInt(reviewM[1].replace(/,/g,''));
+      setVal(reviewsEl, '');
+      animateCount(reviewsEl, n, '+', 1600);
+    } else {
+      setLink(reviewsEl);
+    }
+
+    if (installM) {
+      setVal(dlEl, installM[1].trim());
+    } else {
+      setLink(dlEl);
+    }
+
+  } catch(e) {
+    // All three fallback to Play Store link
+    [document.getElementById('stat-rating'),
+     document.getElementById('stat-downloads'),
+     document.getElementById('stat-reviews')].forEach(el=>{
+      el.style.cssText = 'font-size:13px; background:none; -webkit-text-fill-color:rgba(241,240,255,0.55);';
+      el.innerHTML = `<a href="https://play.google.com/store/apps/details?id=com.paulbaruah.attenly" target="_blank" rel="noopener noreferrer" style="color:#818cf8;text-decoration:none;font-size:12px;">See on Play Store →</a>`;
+    });
+  }
+})();
+
+/* ============================================================
+   4. ATTENDANCE RING ANIMATION
+============================================================ */
+(function(){
+  const wrap   = document.getElementById('ring-wrap');
+  const circle = document.getElementById('ring-circle');
+  const pctEl  = document.getElementById('ring-pct');
+  const badge  = document.getElementById('ring-safe-badge');
+  if (!wrap || !circle) return;
+
+  const TARGET = 78;           // example attendance %
+  const R = 80;
+  const CIRCUM = 2 * Math.PI * R; // ≈ 502.65
+  const DURATION = 2200;
+  let animated = false;
+
+  function runRing() {
+    if (animated) return;
+    animated = true;
+    const start = performance.now();
+    function step(now) {
+      const p = Math.min((now - start) / DURATION, 1);
+      const eased = 1 - Math.pow(1 - p, 3); // ease-out-cubic
+      const current = eased * TARGET;
+      circle.style.strokeDashoffset = CIRCUM - (current / 100) * CIRCUM;
+      pctEl.textContent = Math.round(current) + '%';
+      if (current >= 75 && !badge.classList.contains('show')) {
+        badge.classList.add('show');
+      }
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  const io = new IntersectionObserver(entries=>{
+    if (entries[0].isIntersecting) { runRing(); io.disconnect(); }
+  }, { threshold: 0.3 });
+  io.observe(wrap);
+})();
+
+/* ============================================================
+   5. SCREENSHOT CAROUSEL
+============================================================ */
+(function(){
+  const track  = document.getElementById('carousel-track');
+  const prev   = document.getElementById('carousel-prev');
+  const next   = document.getElementById('carousel-next');
+  const dotsWrap = document.getElementById('carousel-dots');
+  if (!track) return;
+
+  const slides = Array.from(track.querySelectorAll('.carousel-slide'));
+  const N = slides.length;
+  let current = 0;
+  let autoTimer = null;
+
+  // Build dots
+  slides.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'carousel-dot' + (i===0?' active':'');
+    d.setAttribute('aria-label', `Go to screenshot ${i+1}`);
+    d.setAttribute('role', 'tab');
+    d.addEventListener('click', ()=>goTo(i));
+    dotsWrap.appendChild(d);
+  });
+  const dots = Array.from(dotsWrap.querySelectorAll('.carousel-dot'));
+
+  function goTo(idx) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = (idx + N) % N;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+    slides[current].scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
+    updateBtns();
+    resetAuto();
+  }
+
+  function updateBtns() {
+    prev.disabled = false; next.disabled = false; // wrap-around always possible
+  }
+
+  function resetAuto() {
+    clearInterval(autoTimer);
+    autoTimer = setInterval(()=>goTo(current+1), 3500);
+  }
+
+  prev.addEventListener('click', ()=>goTo(current-1));
+  next.addEventListener('click', ()=>goTo(current+1));
+
+  // Pause auto on hover/touch
+  track.addEventListener('mouseenter', ()=>clearInterval(autoTimer));
+  track.addEventListener('mouseleave', resetAuto);
+  track.addEventListener('touchstart', ()=>clearInterval(autoTimer), {passive:true});
+  track.addEventListener('touchend', resetAuto, {passive:true});
+
+  // Detect scroll-snap position change
+  let scrollTimer;
+  track.addEventListener('scroll', ()=>{
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(()=>{
+      const slideW = slides[0].offsetWidth + 20; // gap
+      const idx = Math.round(track.scrollLeft / slideW);
+      if (idx !== current) {
+        slides[current].classList.remove('active'); dots[current].classList.remove('active');
+        current = Math.max(0, Math.min(idx, N-1));
+        slides[current].classList.add('active'); dots[current].classList.add('active');
+        updateBtns();
+      }
+    }, 80);
+  }, {passive:true});
+
+  updateBtns();
+  resetAuto();
+})();
+
+/* ============================================================
+   6. FAQ ACCORDION
+============================================================ */
+(function(){
+  document.querySelectorAll('.faq-q').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.faq-item.open').forEach(i=>{
+        i.classList.remove('open');
+        i.querySelector('.faq-q').setAttribute('aria-expanded','false');
+      });
+      // Open clicked (if it was closed)
+      if (!isOpen) {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded','true');
       }
     });
-  }, { threshold: 0.1 });
-  reveals.forEach(el => io.observe(el));
+  });
+})();
 </script>
 </body>
 </html>
