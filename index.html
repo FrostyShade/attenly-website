@@ -311,81 +311,7 @@
     /* ============================================================
        SCREENSHOT CAROUSEL
     ============================================================ */
-    .carousel-section { padding:0 0 80px; }
-    .carousel-header { text-align:center; margin-bottom:44px; }
-    .carousel-outer {
-      position:relative;
-      display:flex; align-items:center; gap:16px;
-    }
-    .carousel-track {
-      display:flex; gap:20px;
-      overflow-x:auto; scroll-snap-type:x mandatory;
-      scroll-behavior:smooth; -webkit-overflow-scrolling:touch;
-      padding:24px 0 28px;
-      /* hide scrollbar */
-      scrollbar-width:none; -ms-overflow-style:none;
-    }
-    .carousel-track::-webkit-scrollbar { display:none; }
-    .carousel-slide {
-      scroll-snap-align:center; flex-shrink:0;
-      display:flex; flex-direction:column; align-items:center; gap:14px;
-      cursor:pointer;
-    }
-    .c-phone {
-      width:185px; position:relative;
-      transition:transform .3s;
-    }
-    .carousel-slide:hover .c-phone { transform:translateY(-6px); }
-    .c-phone::before {
-      content:''; position:absolute; inset:-2px; border-radius:42px;
-      background:linear-gradient(150deg,rgba(168,85,247,.35),rgba(99,102,241,.2));
-      z-index:-1; filter:blur(2px);
-      transition:opacity .3s;
-    }
-    .carousel-slide:hover .c-phone::before { opacity:1.5; }
-    .carousel-slide.active .c-phone::before {
-      background:linear-gradient(150deg,rgba(168,85,247,.6),rgba(99,102,241,.4));
-    }
-    .c-phone img {
-      width:100%; border-radius:40px; display:block;
-      box-shadow:0 20px 56px rgba(0,0,0,.6),0 0 30px rgba(124,58,237,.12);
-    }
-    .c-caption {
-      font-size:13px; font-weight:600; color:var(--c-muted);
-      text-align:center; transition:color .2s;
-    }
-    .carousel-slide:hover .c-caption,
-    .carousel-slide.active .c-caption { color:#c4b5fd; }
 
-    /* Carousel nav buttons */
-    .carousel-btn {
-      flex-shrink:0; width:40px; height:40px; border-radius:50%;
-      background:var(--c-surface); border:1px solid var(--c-border2);
-      color:var(--c-text); font-size:20px; cursor:pointer;
-      display:flex; align-items:center; justify-content:center;
-      transition:background .2s,border-color .2s,transform .15s;
-      z-index:2; line-height:1;
-    }
-    .carousel-btn:hover { background:var(--c-surface2); border-color:rgba(124,58,237,.4); transform:scale(1.08); }
-    .carousel-btn:disabled { opacity:.3; cursor:not-allowed; transform:none; }
-
-    /* Dots */
-    .carousel-dots {
-      display:flex; justify-content:center; gap:8px; margin-top:4px;
-    }
-    .carousel-dot {
-      width:6px; height:6px; border-radius:50%;
-      background:var(--c-border2); cursor:pointer;
-      transition:background .2s,width .3s,border-radius .3s;
-    }
-    .carousel-dot.active {
-      width:22px; border-radius:3px;
-      background:linear-gradient(90deg,#a855f7,#818cf8);
-    }
-    @media(max-width:600px){
-      .carousel-btn { display:none; }
-      .c-phone { width:160px; }
-    }
 
     /* ============================================================
        FEATURE ROWS
@@ -642,7 +568,7 @@
       <span>Attenly</span>
     </a>
     <div class="nav-right">
-      <a href="#screenshots" class="nav-link">Screenshots</a>
+
       <a href="#faq" class="nav-link">FAQ</a>
       <a href="https://play.google.com/store/apps/details?id=com.paulbaruah.attenly&pcampaignid=web_share" class="nav-btn" target="_blank" rel="noopener noreferrer" id="nav-download">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 20.5v-17c0-.83 1-.83 1.5-.5l15 8.5c.45.26.45.74 0 1L6.5 21C6 21.33 5 21.33 5 20.5z"/></svg>
@@ -671,8 +597,8 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 20.5v-17c0-.83 1-.83 1.5-.5l15 8.5c.45.26.45.74 0 1L6.5 21C6 21.33 5 21.33 5 20.5z"/></svg>
           Get it on Play Store
         </a>
-        <a href="#screenshots" class="btn-ghost" id="hero-screenshots">
-          See screenshots
+        <a href="#features" class="btn-ghost" id="hero-features">
+          Explore features
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>
@@ -748,46 +674,6 @@
   </div>
 </section>
 
-<!-- ══════════ SCREENSHOT CAROUSEL ══════════ -->
-<section class="carousel-section wrap" id="screenshots">
-  <div class="carousel-header reveal">
-    <div class="section-kicker">App Screenshots</div>
-    <h2 class="section-title">See it in action</h2>
-    <p class="section-sub" style="margin:0 auto;">Every screen, exactly as it looks on your phone.</p>
-  </div>
-
-  <div class="carousel-outer reveal">
-    <button class="carousel-btn" id="carousel-prev" aria-label="Previous screenshot">&#8249;</button>
-    <div class="carousel-track" id="carousel-track" role="list">
-      <div class="carousel-slide active" role="listitem">
-        <div class="c-phone"><img src="screenshots/image1.png" alt="Dashboard — overall attendance overview" loading="lazy"/></div>
-        <span class="c-caption">Dashboard</span>
-      </div>
-      <div class="carousel-slide" role="listitem">
-        <div class="c-phone"><img src="screenshots/image2.png" alt="Attendance tracking with safe-skip indicator" loading="lazy"/></div>
-        <span class="c-caption">Attendance Tracking</span>
-      </div>
-      <div class="carousel-slide" role="listitem">
-        <div class="c-phone"><img src="screenshots/image3.png" alt="Visual weekly timetable calendar view" loading="lazy"/></div>
-        <span class="c-caption">Visual Timetable</span>
-      </div>
-      <div class="carousel-slide" role="listitem">
-        <div class="c-phone"><img src="screenshots/image4.png" alt="Assignment deadlines tracker" loading="lazy"/></div>
-        <span class="c-caption">Assignments</span>
-      </div>
-      <div class="carousel-slide" role="listitem">
-        <div class="c-phone"><img src="screenshots/image5.png" alt="Share timetable with friends" loading="lazy"/></div>
-        <span class="c-caption">Share Timetable</span>
-      </div>
-      <div class="carousel-slide" role="listitem">
-        <div class="c-phone"><img src="screenshots/image6.png" alt="Weekly schedule at a glance" loading="lazy"/></div>
-        <span class="c-caption">Week at a Glance</span>
-      </div>
-    </div>
-    <button class="carousel-btn" id="carousel-next" aria-label="Next screenshot">&#8250;</button>
-  </div>
-  <div class="carousel-dots" id="carousel-dots" role="tablist" aria-label="Screenshot navigation"></div>
-</section>
 
 <!-- ══════════ FEATURE ROWS ══════════ -->
 <section class="feature-rows wrap" id="features">
@@ -1220,80 +1106,6 @@ function animateCount(el, target, suffix, duration) {
   io.observe(wrap);
 })();
 
-/* ============================================================
-   5. SCREENSHOT CAROUSEL
-============================================================ */
-(function(){
-  const track  = document.getElementById('carousel-track');
-  const prev   = document.getElementById('carousel-prev');
-  const next   = document.getElementById('carousel-next');
-  const dotsWrap = document.getElementById('carousel-dots');
-  if (!track) return;
-
-  const slides = Array.from(track.querySelectorAll('.carousel-slide'));
-  const N = slides.length;
-  let current = 0;
-  let autoTimer = null;
-
-  // Build dots
-  slides.forEach((_, i) => {
-    const d = document.createElement('button');
-    d.className = 'carousel-dot' + (i===0?' active':'');
-    d.setAttribute('aria-label', `Go to screenshot ${i+1}`);
-    d.setAttribute('role', 'tab');
-    d.addEventListener('click', ()=>goTo(i));
-    dotsWrap.appendChild(d);
-  });
-  const dots = Array.from(dotsWrap.querySelectorAll('.carousel-dot'));
-
-  function goTo(idx) {
-    slides[current].classList.remove('active');
-    dots[current].classList.remove('active');
-    current = (idx + N) % N;
-    slides[current].classList.add('active');
-    dots[current].classList.add('active');
-    slides[current].scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
-    updateBtns();
-    resetAuto();
-  }
-
-  function updateBtns() {
-    prev.disabled = false; next.disabled = false; // wrap-around always possible
-  }
-
-  function resetAuto() {
-    clearInterval(autoTimer);
-    autoTimer = setInterval(()=>goTo(current+1), 3500);
-  }
-
-  prev.addEventListener('click', ()=>goTo(current-1));
-  next.addEventListener('click', ()=>goTo(current+1));
-
-  // Pause auto on hover/touch
-  track.addEventListener('mouseenter', ()=>clearInterval(autoTimer));
-  track.addEventListener('mouseleave', resetAuto);
-  track.addEventListener('touchstart', ()=>clearInterval(autoTimer), {passive:true});
-  track.addEventListener('touchend', resetAuto, {passive:true});
-
-  // Detect scroll-snap position change
-  let scrollTimer;
-  track.addEventListener('scroll', ()=>{
-    clearTimeout(scrollTimer);
-    scrollTimer = setTimeout(()=>{
-      const slideW = slides[0].offsetWidth + 20; // gap
-      const idx = Math.round(track.scrollLeft / slideW);
-      if (idx !== current) {
-        slides[current].classList.remove('active'); dots[current].classList.remove('active');
-        current = Math.max(0, Math.min(idx, N-1));
-        slides[current].classList.add('active'); dots[current].classList.add('active');
-        updateBtns();
-      }
-    }, 80);
-  }, {passive:true});
-
-  updateBtns();
-  resetAuto();
-})();
 
 /* ============================================================
    6. FAQ ACCORDION
