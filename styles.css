@@ -1095,8 +1095,8 @@ button {
   .faq-btn {
     padding: 19px 2px;
   }
-  .closer-frame {
-    width: min(230px, 70%);
+  .closer-signature {
+    width: min(176px, 50vw);
   }
   .closer-actions {
     width: 100%;
@@ -1840,20 +1840,42 @@ button {
 
 .closer-art {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 20px;
+  justify-content: center;
 }
 
-.closer-frame {
-  width: min(290px, 78%);
-  border-radius: 30px;
-  overflow: hidden;
-  box-shadow: 0 32px 70px -18px rgba(0, 0, 0, 0.72), 0 0 0 1px rgba(255, 255, 255, 0.12);
+.closer-signature {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(260px, 66vw);
+  aspect-ratio: 1;
 }
 
-.closer-frame img {
+.closer-signature::before {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(230, 104, 167, 0.24) 0%, rgba(249, 107, 77, 0.12) 42%, transparent 72%);
+  filter: blur(18px);
+  pointer-events: none;
+}
+
+.closer-signature-logo {
+  position: relative;
+  z-index: 1;
   width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 24px 48px rgba(0, 0, 0, 0.55));
+  animation: heroFloat 9s ease-in-out infinite;
+  transition: transform 0.45s var(--ease-out);
+}
+
+.closer-signature:hover .closer-signature-logo {
+  transform: scale(1.04) translateY(-4px);
 }
 
 .closer-title {
@@ -1952,7 +1974,7 @@ button {
 .footer-brand-row img {
   width: 28px;
   height: 28px;
-  border-radius: 7px;
+  object-fit: contain;
 }
 
 .footer-col h3 {
