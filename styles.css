@@ -76,6 +76,57 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+.ambient-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.65s var(--ease);
+}
+
+body.has-webgl .ambient-canvas {
+  opacity: 1;
+}
+
+main,
+.site-footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Progressive enhancement: let live shader canvas show seamlessly through light bands */
+body.has-webgl .hero,
+body.has-webgl .hero.is-study-sky,
+body.has-webgl .statement,
+body.has-webgl .steps-band,
+body.has-webgl .numbers-sec,
+body.has-webgl .ecosystem-sec,
+body.has-webgl .reviews-sec,
+body.has-webgl .faq-sec {
+  background: transparent;
+}
+
+body.has-webgl .hero::after {
+  display: none;
+}
+
+body.has-webgl .screens-sec {
+  background-color: transparent;
+}
+
+body.has-webgl .closer-sec {
+  background: transparent;
+}
+
+body.has-webgl .site-footer {
+  background: rgba(15, 6, 17, 0.84);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
 img,
 svg {
   display: block;
