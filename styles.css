@@ -98,6 +98,11 @@ main,
 }
 
 /* Progressive enhancement: let live shader canvas show seamlessly through light bands */
+body.has-webgl {
+  --head: #26192a;
+  --mute: #47394b;
+}
+
 body.has-webgl .hero,
 body.has-webgl .hero.is-study-sky,
 body.has-webgl .statement,
@@ -117,14 +122,26 @@ body.has-webgl .screens-sec {
   background-color: transparent;
 }
 
+body.has-webgl .studio-card,
+body.has-webgl .panel-studio,
+body.has-webgl .review-slot:not(.review-slot--featured) {
+  background: rgba(255, 255, 255, 0.84);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+body.has-webgl .hero-mode-switch {
+  background: rgba(255, 255, 255, 0.78);
+}
+
 body.has-webgl .closer-sec {
   background: transparent;
 }
 
 body.has-webgl .site-footer {
-  background: rgba(15, 6, 17, 0.84);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(15, 6, 17, 0.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 img,

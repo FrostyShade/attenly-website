@@ -544,36 +544,57 @@
       'void main() {',
       '  vec2 uv = gl_FragCoord.xy / uRes.xy;',
       '  float screenY = 1.0 - uv.y;',
-      '  float minSide = max(1.0, min(uRes.x, uRes.y));',
-      '  vec2 p = (gl_FragCoord.xy - 0.5 * uRes.xy) / minSide;',
-      '  vec2 ptr = (uPointer - 0.5) * 0.45;',
-      '  float t = uTime * 0.085;',
+      '  vec2 aspect = vec2(uRes.x / max(1.0, uRes.y), 1.0);',
+      '  vec2 p = (uv - 0.5) * aspect;',
+      '  vec2 ptrUv = vec2(uPointer.x, 1.0 - uPointer.y);',
+      '  vec2 ptrP = (ptrUv - 0.5) * aspect;',
+      '  vec2 dPtr = p - ptrP;',
+      '  float ptrDist = length(dPtr);',
       '',
-      '  vec2 flow = vec2(t * 0.7, -t * 0.5 + uScroll * 0.22);',
-      '  float n1 = fbm(p * 1.45 + flow - ptr * 0.6);',
-      '  float n2 = fbm(p * 1.85 - flow * 0.8 + vec2(n1 * 1.35, -n1 * 0.9) + ptr);',
-      '  float n3 = fbm(p * 1.15 + vec2(n2 * 1.1, t * 0.6));',
+      '  // Fluid cursor ripple warp',
+      '  vec2 q = p - dPtr * exp(-ptrDist * ptrDist * 4.5) * 0.30;',
       '',
-      '  vec3 lightCol = uBase;',
-      '  lightCol = mix(lightCol, uColA, smoothstep(0.24, 0.82, n1) * uStrength);',
-      '  lightCol = mix(lightCol, uColB, smoothstep(0.30, 0.86, n2) * uStrength);',
-      '  lightCol = mix(lightCol, uColC, smoothstep(0.38, 0.90, n3) * (uStrength * 0.85));',
+      '  float t = uTime * 0.28;',
+      '  float sc = uScroll * 0.52;',
+      '  vec2 flow1 = vec2(t * 0.44 + sin(t * 0.27) * 0.20, -t * 0.30 + sc);',
+      '  vec2 flow2 = vec2(-t * 0.36, t * 0.24 - sc * 0.65);',
       '',
-      '  // Subtle pointer warmth highlight on light background',
-      '  float ptrGlow = exp(-3.4 * length(uv - vec2(uPointer.x, 1.0 - uPointer.y)));',
-      '  lightCol = mix(lightCol, uColC, ptrGlow * 0.18 * uStrength);',
+      '  float f1 = fbm(q * 1.55 + flow1);',
+      '  float f2 = fbm(q * 2.05 + vec2(f1 * 1.85, -f1 * 1.35) + flow2);',
+      '  float n1 = smoothstep(0.24, 0.68, f1);',
+      '  float n2 = smoothstep(0.25, 0.69, f2);',
+      '',
+      '  // Sweeping chromatic silk ribbons and luminous crests',
+      '  float phase1 = q.x * 2.5 - q.y * 1.85 + f1 * 3.8 + f2 * 1.3 - t * 1.15 - sc * 1.35;',
+      '  float phase2 = q.x * 1.65 + q.y * 2.55 - f2 * 3.6 + t * 0.90 + sc * 0.90;',
+      '  float wave1 = 0.5 + 0.5 * sin(phase1);',
+      '  float wave2 = 0.5 + 0.5 * cos(phase2);',
+      '  float curtain1 = smoothstep(0.16, 0.88, mix(n1, wave1, 0.64));',
+      '  float curtain2 = smoothstep(0.20, 0.90, mix(n2, wave2, 0.66));',
+      '  float crest = clamp(pow(wave1 * wave2, 1.35) + 0.42 * exp(-8.0 * abs(sin(phase1 * 0.5 + 0.65))), 0.0, 1.0);',
+      '',
+      '  vec3 lightCol = mix(uBase, uColA, curtain1 * uStrength);',
+      '  lightCol = mix(lightCol, uColB, curtain2 * uStrength * 0.92);',
+      '  lightCol = mix(lightCol, uColC, crest * uStrength * 0.86);',
+      '',
+      '  // Luminous pointer prism halo',
+      '  float ptrGlow = exp(-3.1 * ptrDist);',
+      '  lightCol = mix(lightCol, mix(uColC, vec3(1.0, 0.93, 0.88), 0.28), ptrGlow * 0.48 * uStrength);',
       '',
       '  // Nocturnal Plum closer region below uDarkLine',
-      '  vec3 darkBase = vec3(0.082, 0.035, 0.094);',
-      '  vec3 darkOrchid = vec3(0.235, 0.075, 0.265);',
-      '  vec3 darkCoral = vec3(0.310, 0.112, 0.165);',
-      '  vec3 darkCol = mix(darkBase, darkOrchid, smoothstep(0.32, 0.82, n2) * 0.65);',
-      '  darkCol = mix(darkCol, darkCoral, smoothstep(0.42, 0.88, n3) * 0.55);',
+      '  vec3 darkBase = vec3(0.082, 0.032, 0.094);',
+      '  vec3 darkOrchid = vec3(0.425, 0.125, 0.480);',
+      '  vec3 darkRose = vec3(0.660, 0.175, 0.405);',
+      '  vec3 darkCoral = vec3(0.790, 0.270, 0.235);',
+      '  vec3 darkCol = mix(darkBase, darkOrchid, curtain1 * 0.88);',
+      '  darkCol = mix(darkCol, darkRose, curtain2 * 0.72);',
+      '  darkCol = mix(darkCol, darkCoral, crest * 0.76);',
+      '  darkCol = mix(darkCol, darkCoral + 0.12, ptrGlow * 0.42);',
       '',
-      '  float darkMask = smoothstep(uDarkLine, uDarkLine + 0.065, screenY + (n1 - 0.5) * 0.028);',
+      '  float darkMask = smoothstep(uDarkLine - 0.02, uDarkLine + 0.075, screenY + (wave1 - 0.5) * 0.045 + (n1 - 0.5) * 0.03);',
       '  vec3 col = mix(lightCol, darkCol, darkMask);',
       '',
-      '  // Micro dither to keep pastel gradients completely free of banding',
+      '  // Micro dither to keep gradients free of banding',
       '  float dither = (hash(gl_FragCoord.xy + fract(uTime) * 60.0) - 0.5) * (2.0 / 255.0);',
       '  gl_FragColor = vec4(clamp(col + dither, 0.0, 1.0), 1.0);',
       '}'
@@ -623,51 +644,60 @@
 
     const PALETTES = {
       planner: {
-        base: [0.980, 0.968, 0.984],
-        a: [0.914, 0.835, 0.961],
-        b: [0.973, 0.863, 0.914],
-        c: [0.988, 0.878, 0.839],
-        strength: 0.92
+        base: [0.976, 0.945, 0.988],
+        a: [0.765, 0.565, 0.925],
+        b: [0.976, 0.600, 0.796],
+        c: [1.000, 0.665, 0.515],
+        strength: 0.94
       },
       studyHero: {
-        base: [0.957, 0.976, 0.961],
-        a: [0.839, 0.918, 0.867],
-        b: [0.894, 0.941, 0.906],
-        c: [0.980, 0.922, 0.820],
-        strength: 0.92
+        base: [0.918, 0.968, 0.938],
+        a: [0.535, 0.820, 0.665],
+        b: [0.710, 0.905, 0.785],
+        c: [0.990, 0.795, 0.435],
+        strength: 0.95
       },
       attendance: {
-        base: [0.984, 0.973, 0.984],
-        a: [0.929, 0.859, 0.961],
-        b: [0.980, 0.863, 0.894],
-        c: [0.980, 0.875, 0.843],
-        strength: 0.92
+        base: [0.980, 0.940, 0.985],
+        a: [0.770, 0.560, 0.930],
+        b: [0.975, 0.575, 0.755],
+        c: [1.000, 0.675, 0.490],
+        strength: 0.96
       },
       paperAiry: {
-        base: [0.984, 0.980, 0.976],
-        a: [0.937, 0.894, 0.965],
-        b: [0.976, 0.914, 0.937],
-        c: [0.984, 0.922, 0.898],
-        strength: 0.56
+        base: [0.984, 0.968, 0.976],
+        a: [0.835, 0.695, 0.945],
+        b: [0.975, 0.720, 0.850],
+        c: [1.000, 0.760, 0.640],
+        strength: 0.86
       },
       featuresBand: {
-        base: [0.976, 0.965, 0.980],
-        a: [0.925, 0.863, 0.961],
-        b: [0.973, 0.890, 0.929],
-        c: [0.984, 0.902, 0.875],
-        strength: 0.82
+        base: [0.976, 0.945, 0.982],
+        a: [0.775, 0.575, 0.925],
+        b: [0.975, 0.620, 0.805],
+        c: [1.000, 0.675, 0.535],
+        strength: 0.94
+      },
+      screensBand: {
+        base: [0.972, 0.960, 0.988],
+        a: [0.790, 0.610, 0.935],
+        b: [0.960, 0.660, 0.825],
+        c: [1.000, 0.700, 0.575],
+        strength: 0.92
       },
       studyBand: {
-        base: [0.976, 0.984, 0.976],
-        a: [0.882, 0.937, 0.902],
-        b: [0.929, 0.957, 0.929],
-        c: [0.980, 0.937, 0.867],
-        strength: 0.62
+        base: [0.922, 0.968, 0.942],
+        a: [0.545, 0.825, 0.675],
+        b: [0.715, 0.905, 0.790],
+        c: [0.985, 0.795, 0.455],
+        strength: 0.95
       }
     };
 
     const featuresEl = document.getElementById('features');
+    const screensEl = document.getElementById('screens');
     const studyEl = document.getElementById('study-mode');
+    const reviewsEl = document.getElementById('reviews');
     const closerEl = document.getElementById('download');
 
     const curr = {
@@ -681,11 +711,13 @@
       ptrY: 0.35
     };
     const targetPtr = { x: 0.5, y: 0.35 };
+    let pointerActive = false;
 
     if (window.matchMedia('(hover: hover)').matches) {
       window.addEventListener(
         'pointermove',
         e => {
+          pointerActive = true;
           targetPtr.x = Math.max(0, Math.min(1, e.clientX / Math.max(1, window.innerWidth)));
           targetPtr.y = Math.max(0, Math.min(1, e.clientY / Math.max(1, window.innerHeight)));
         },
@@ -724,9 +756,19 @@
         if (fr.top < vh * 0.72 && fr.bottom > vh * 0.28) return PALETTES.featuresBand;
       }
 
+      if (screensEl) {
+        const scr = screensEl.getBoundingClientRect();
+        if (scr.top < vh * 0.72 && scr.bottom > vh * 0.28) return PALETTES.screensBand;
+      }
+
       if (studyEl) {
         const sr = studyEl.getBoundingClientRect();
         if (sr.top < vh * 0.72 && sr.bottom > vh * 0.28) return PALETTES.studyBand;
+      }
+
+      if (reviewsEl) {
+        const rr = reviewsEl.getBoundingClientRect();
+        if (rr.top < vh * 0.72 && rr.bottom > vh * 0.28) return PALETTES.featuresBand;
       }
 
       return PALETTES.paperAiry;
@@ -747,15 +789,20 @@
       startMs = now;
       if (!prefersReduced) elapsed += dt;
 
+      if (!pointerActive) {
+        targetPtr.x = 0.5 + Math.sin(elapsed * 0.55) * 0.26;
+        targetPtr.y = 0.40 + Math.cos(elapsed * 0.41) * 0.15;
+      }
+
       const pal = pickTargetPalette();
-      const k = immediate ? 1 : Math.min(1, dt * 3.8);
+      const k = immediate ? 1 : Math.min(1, dt * 4.2);
       lerpVec3(curr.base, pal.base, k);
       lerpVec3(curr.a, pal.a, k);
       lerpVec3(curr.b, pal.b, k);
       lerpVec3(curr.c, pal.c, k);
       curr.strength += (pal.strength - curr.strength) * k;
 
-      const ptrK = immediate ? 1 : Math.min(1, dt * 3.2);
+      const ptrK = immediate ? 1 : Math.min(1, dt * 4.5);
       curr.ptrX += (targetPtr.x - curr.ptrX) * ptrK;
       curr.ptrY += (targetPtr.y - curr.ptrY) * ptrK;
 
