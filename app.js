@@ -698,7 +698,7 @@
     const screensEl = document.getElementById('screens');
     const studyEl = document.getElementById('study-mode');
     const reviewsEl = document.getElementById('reviews');
-    const closerEl = document.getElementById('download');
+    const closerEl = document.getElementById('download') || document.querySelector('.closer-sec, .site-footer');
 
     const curr = {
       base: [...PALETTES.planner.base],
@@ -848,4 +848,21 @@
       }
     });
   })();
+
+  /* ------------------------------------------------------------------------
+     10. OUTBOUND CTA TELEMETRY BRIDGE (Zero-cookie event dispatch)
+     ------------------------------------------------------------------------ */
+  document.addEventListener('click', e => {
+    const target = e.target && e.target.closest ? e.target.closest('[data-track]') : null;
+    if (!target) return;
+    const name = target.getAttribute('data-track') || '';
+    const href = target.getAttribute('href') || '';
+    window.dispatchEvent(new CustomEvent('attenly:cta', { detail: { name, href } }));
+    if (typeof window.plausible === 'function') {
+      window.plausible('CTA Click', { props: { target: name } });
+    }
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'select_content', { content_type: 'cta', item_id: name });
+    }
+  });
 })();

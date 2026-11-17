@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Privacy Policy — Attenly</title>
+  <meta name="description" content="Privacy Policy for Attenly on Android and getattenly.in. Understand how personal attendance records remain on your device and how optional Group Projects sync works."/>
+  <meta property="og:site_name" content="Attenly"/>
+  <meta property="og:title" content="Privacy Policy — Attenly"/>
+  <meta property="og:description" content="How Attenly handles local on-device records, timetable exports, and optional Group Projects syncing."/>
+  <meta property="og:image" content="https://getattenly.in/og-image.jpg"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:url" content="https://getattenly.in/privacy.html"/>
+  <meta property="og:type" content="website"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://getattenly.in/og-image.jpg"/>
+  <meta name="theme-color" content="#150918"/>
+  <link rel="canonical" href="https://getattenly.in/privacy.html"/>
+  <link rel="icon" type="image/jpeg" href="app-icon.jpg"/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css?v=11"/>
+</head>
+<body>
+
+<canvas id="ambient-canvas" class="ambient-canvas" aria-hidden="true"></canvas>
+
+<header class="event-nav" id="event-nav">
+  <div class="nav-cluster">
+    <a href="index.html" class="nav-piece brand-piece" aria-label="Attenly home">
+      <span class="piece-glass" aria-hidden="true"></span>
+      <img src="app-icon.jpg" alt="Attenly app icon"/>
+      <span>Attenly</span>
+    </a>
+
+    <nav class="nav-piece links-piece" aria-label="Main navigation">
+      <span class="piece-glass" aria-hidden="true"></span>
+      <a href="index.html#overview">Overview</a>
+      <a href="index.html#features">Features</a>
+      <a href="index.html#screens">Screens</a>
+      <a href="index.html#study-mode">Study Mode</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="terms.html">Terms</a>
+    </nav>
+
+    <a href="https://www.instagram.com/getattenly/" class="nav-piece ig-piece" target="_blank" rel="noopener noreferrer" aria-label="Attenly on Instagram (@getattenly)" data-track="legal-instagram">
+      <span class="piece-glass" aria-hidden="true"></span>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+      </svg>
+    </a>
+
+    <a href="https://play.google.com/store/apps/details?id=com.paulbaruah.attenly" class="nav-piece cta-piece" target="_blank" rel="noopener noreferrer" data-track="legal-play-store">
+      <span class="piece-glass piece-glass--ink" aria-hidden="true"></span>
+      <img src="play-store-logo.png?v=2" alt="" width="15" height="15" style="object-fit:contain;" aria-hidden="true"/>
+      <span class="cta-label-full">Get it on Play Store</span>
+      <span class="cta-label-short">Play Store</span>
+    </a>
+
+    <button type="button" class="nav-piece menu-piece" id="nav-menu-btn" aria-label="Open section menu" aria-expanded="false">
+      <span class="piece-glass" aria-hidden="true"></span>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <line x1="5" y1="9" x2="19" y2="9"/>
+        <line x1="5" y1="15" x2="19" y2="15"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="nav-drawer" id="nav-drawer" aria-label="Mobile menu">
+    <a href="index.html">Home</a>
+    <a href="index.html#features">Features</a>
+    <a href="index.html#faq">FAQ</a>
+    <a href="terms.html">Terms of Use</a>
+    <a href="https://play.google.com/store/apps/details?id=com.paulbaruah.attenly" target="_blank" rel="noopener noreferrer">Google Play ↗</a>
+  </div>
+</header>
+
+<main>
+  <section class="legal-page-sec">
+    <div class="legal-page-wrap">
+      <a href="index.html" class="legal-back-link">← Back to Attenly home</a>
+      <h1 class="legal-page-title">Privacy <em class="serif-it">Policy</em></h1>
+      <p class="legal-updated">Last updated: November 2026 · Attenly for Android</p>
+
+      <article class="legal-doc-card">
+        <h2>1. On-Device First Architecture</h2>
+        <p>
+          Attenly is designed so students can track attendance, weekly timetables, coursework deadlines, Course Map progress, Study Mode logs, and Vault study materials without creating an account. Your personal academic records stay stored locally on your Android device unless you explicitly export or share them.
+        </p>
+
+        <h2>2. Timetable Exports &amp; Sharing</h2>
+        <p>
+          When you manually export a schedule (for example, <code>attenly_timetable.json</code>), only class names, timings, days, and room labels are included. Personal attendance history, absence counts, assignments, and Vault files are never bundled into timetable exports.
+        </p>
+
+        <h2>3. Optional Group Projects &amp; Google Sign-In</h2>
+        <p>
+          Group Projects requires Google sign-in and an internet connection strictly to create, join via invite code, and sync shared project workspaces (such as To do / In progress / Done boards, blockers, and shared folders) across teammates. Teammates inside a project can view only content added directly to that shared Group Project. Personal records outside Group Projects remain local to your device.
+        </p>
+
+        <h2>4. Google Play Purchases &amp; Ads</h2>
+        <p>
+          Optional upgrades such as Attenly Pro (including Leave Planner simulations and the Pro app icon) are processed securely through Google Play Billing. We do not receive or store payment card numbers. Details for authorized advertising partners are published in <a href="/app-ads.txt" target="_blank" rel="noopener noreferrer">app-ads.txt</a>.
+        </p>
+
+        <h2>5. Data Sale &amp; Third Parties</h2>
+        <p>
+          We never sell personal information or academic records to data brokers or unrelated third parties. Third-party infrastructure (such as Google Play Services and cloud authentication/sync when using Group Projects) operates only to deliver the core functionality you trigger.
+        </p>
+
+        <h2>6. Website Cookies</h2>
+        <p>
+          This landing website at <code>getattenly.in</code> is static and operates without advertising trackers or invasive behavioral cookies. Outbound clicks to Google Play or social profiles follow each destination platform's own privacy notice.
+        </p>
+
+        <h2>7. Your Choices, Deletion &amp; Contact</h2>
+        <ul>
+          <li>Uninstalling the app clears local on-device records unless backed up on your device.</li>
+          <li>To request deletion of shared Group Project account data or ask any privacy question, contact developer Paul Baruah at <a href="mailto:attenly.support@gmail.com">attenly.support@gmail.com</a>.</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-cols">
+      <div>
+        <div class="footer-brand-row">
+          <img src="logo.png" alt="Attenly"/>
+          <span>Attenly</span>
+        </div>
+        <p style="font-size:14px; max-width:28ch; line-height:1.55;">
+          Attendance, schedule, focus timer, and group projects for college life.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h3>Product</h3>
+        <ul>
+          <li><a href="index.html#overview">Overview</a></li>
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="index.html#screens">Screens</a></li>
+          <li><a href="index.html#study-mode">Study Mode</a></li>
+          <li><a href="index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3>Connect</h3>
+        <ul>
+          <li><a href="https://play.google.com/store/apps/details?id=com.paulbaruah.attenly" target="_blank" rel="noopener noreferrer">Google Play&nbsp;↗</a></li>
+          <li><a href="https://www.instagram.com/getattenly/" target="_blank" rel="noopener noreferrer">Instagram (@getattenly)&nbsp;↗</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3>Legal</h3>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Use</a></li>
+          <li><a href="mailto:attenly.support@gmail.com">attenly.support@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 Attenly · Paul Baruah</span>
+      <a href="https://play.google.com/store/apps/details?id=com.paulbaruah.attenly" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:var(--paper);">Download on Android&nbsp;↗</a>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js?v=12" defer></script>
+</body>
+</html>
